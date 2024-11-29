@@ -1,0 +1,12 @@
+pt-BR:
+  activerecord:
+    models:
+      notice_history:
+        one: 'Histórico do edital'
+        other: 'Históricos do edital'
+    attributes:
+      notice_history:
+        edited_by: 'Editado por'
+        changes_made: 'Mudanças realizadas'
+        edited_at: 'Editado em'
+

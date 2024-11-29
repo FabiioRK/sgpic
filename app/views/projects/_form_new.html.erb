@@ -1,0 +1,205 @@
+<% if project.errors.any? %>
+  <div class="alert alert-danger" id="error_explanation" data-turbo-cache="false">
+    <h3 class="alert-heading"><i class="bi bi-exclamation-circle me-2"></i><%= I18n.t("errors.messages.not_saved", count: @project.errors.count, resource: @project.class.model_name.human.downcase) %></h3>
+    <ul class="mb-0">
+      <% project.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for [researcher, project], html: { multipart: true, class: 'form-horizontal confirm-save', data: { turbo: false } } do |f| %>
+  <h4 class="section-title mb-4">Informações do projeto</h4>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :notice_id, required_label(:notice_id, 'project'), class: 'form-label' %>
+      <%= f.collection_select :notice_id, notices, :id, :name, { prompt: "Selecione" }, class: 'form-select form-select-sm' %>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <%= f.label :coordinator_id, required_label(:coordinator_id, 'project'), class: 'form-label' %>
+      <%= f.collection_select :coordinator_id, coordinators, :id, :name, { prompt: "Selecione" }, class: 'form-select form-select-sm' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :project_type, required_label(:project_type, 'project'), class: 'form-label' %>
+      <%= f.collection_select :project_type, Project.project_types, :first, :first, { prompt: "Selecione" }, class: 'form-select form-select-sm' %>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <%= f.label :institution, required_label(:institution, 'project'), class: 'form-label' %>
+      <%= f.text_field :institution, class: 'form-control form-control-sm' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :course, required_label(:course, 'project'), class: 'form-label' %>
+      <%= f.text_field :course, class: 'form-control form-control-sm' %>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <%= f.label :study_area, required_label(:study_area, 'project'), class: 'form-label' %>
+      <%= f.text_field :study_area, class: 'form-control form-control-sm' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :project_title, required_label(:project_title, 'project'), class: 'form-label' %>
+      <%= f.text_field :project_title, class: 'form-control form-control-sm' %>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <%= f.label :research_line, required_label(:research_line, 'project'), class: 'form-label' %>
+      <%= f.text_field :research_line, class: 'form-control form-control-sm' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :ods, required_label(:ods, 'project'), class: 'form-label' %>
+      <%= f.text_area :ods, class: 'form-control', rows: 2 %>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <%= f.label :key_words, required_label(:key_words, 'project'), class: 'form-label' %>
+      <%= f.text_area :key_words, class: 'form-control', rows: 2 %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <%= f.label :project_summary, required_label(:project_summary, 'project'), class: 'form-label' %>
+      <%= f.text_area :project_summary, class: 'form-control', rows: 3 %>
+    </div>
+  </div>
+
+  <div class="mb-5 mt-1">
+    <%= f.label :attachments, "Anexo de documentos", class: "form-label" %>
+    <%= f.file_field :attachments, multiple: true, accept: ".zip, .pdf, .doc, .docx, .png, .jpeg, .jpg", class: "form-control shadow-sm" %>
+    <small class="form-text text-muted">
+      - Você pode anexar até 5 arquivos.<br>
+      - Os formatos permitidos são: <strong>ZIP, PDF, DOC, DOCX, PNG, JPEG</strong>.<br>
+      - O tamanho máximo por arquivo é <strong>10MB</strong>.
+    </small>
+  </div>
+
+
+  <h4 class="section-title mt-5 mb-4">Dados do orientando</h4>
+  <%= f.fields_for :student do |student_field| %>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :name, required_label(:name, 'student'), class: 'form-label' %>
+        <%= student_field.text_field :name, class: 'form-control form-control-sm' %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :social_security_number, required_label(:social_security_number, 'student'), class: 'form-label' %>
+        <%= student_field.text_field :social_security_number, class: 'form-control form-control-sm', maxlength: 14, data: { mask: "cpf" } %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :identity_card_number, required_label(:identity_card_number, 'student'), class: 'form-label' %>
+        <%= student_field.text_field :identity_card_number, class: 'form-control form-control-sm', maxlength: 9, data: { mask: "rg" } %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :birth_date, required_label(:birth_date, 'student'), class: 'form-label' %>
+        <%= student_field.date_field :birth_date, class: 'form-control form-control-sm' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :phone_number, required_label(:phone_number, 'student'), class: 'form-label' %>
+        <%= student_field.text_field :phone_number, class: 'form-control form-control-sm', maxlength: 15, data: { mask: "phone" } %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :email, required_label(:email, 'student'), class: 'form-label' %>
+        <%= student_field.text_field :email, class: 'form-control form-control-sm', data: { mask: "email" }%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :academic_field, required_label(:academic_field, 'student'), class: 'form-label' %>
+        <%= student_field.text_field :academic_field, class: 'form-control form-control-sm' %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :course, required_label(:course, 'student'), class: 'form-label' %>
+        <%= student_field.text_field :course, class: 'form-control form-control-sm' %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6 mb-3">
+        <%= student_field.label :semester, required_label(:semester, 'student'), class: 'form-label' %>
+        <%= student_field.number_field :semester, class: 'form-control form-control-sm', maxlength: 2 %>
+      </div>
+
+      <div class="mt-3 col-md-6 d-flex flex-column justify-content-center">
+        <div class="form-check">
+          <%= student_field.check_box :has_subject_dependencies, class: 'form-check-input' %>
+          <%= student_field.label :has_subject_dependencies, class: 'form-check-label' %>
+        </div>
+        <div class="form-check">
+          <%= student_field.check_box :is_regular_student, class: 'form-check-input' %>
+          <%= student_field.label :is_regular_student, class: 'form-check-label' %>
+        </div>
+      </div>
+    </div>
+
+    <%= student_field.fields_for :address do |address_fields| %>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <%= address_fields.label :postal_code, required_label(:postal_code, 'address'), class: 'form-label' %>
+          <%= address_fields.text_field :postal_code, class: 'form-control form-control-sm', data: { mask: "postal_code", autocomplete: "cep", scope: "project[student_attributes][address_attributes]" } %>
+        </div>
+
+        <div class="col-md-8 mb-3">
+          <%= address_fields.label :street, required_label(:street, 'address'), class: 'form-label' %>
+          <%= address_fields.text_field :street, class: 'form-control form-control-sm', data: { field: "street" } %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= address_fields.label :district, required_label(:district, 'address'), class: 'form-label' %>
+          <%= address_fields.text_field :district, class: 'form-control form-control-sm', data: { field: "district" } %>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <%= address_fields.label :complement, class: 'form-label' %>
+          <%= address_fields.text_field :complement, class: 'form-control form-control-sm' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= address_fields.label :city, required_label(:city, 'address'), class: 'form-label' %>
+          <%= address_fields.text_field :city, class: 'form-control form-control-sm', data: { field: "city" } %>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <%= address_fields.label :state, required_label(:state, 'address'), class: 'form-label' %>
+          <%= address_fields.text_field :state, class: 'form-control form-control-sm', data: { field: "state" } %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="text-start mt-4">
+    <%= link_to researcher_projects_path, class: 'btn btn-sm btn-secondary custom-btn me-2' do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+    <%= f.submit 'Cadastrar Projeto', class: 'btn btn-sm btn-success custom-btn' %>
+  </div>
+<% end %>

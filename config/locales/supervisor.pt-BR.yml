@@ -1,0 +1,9 @@
+pt-BR:
+  activerecord:
+    models:
+      supervisor:
+        one: 'Supervisor'
+        other: 'Supervisores'
+    attributes:
+      supervisor:
+        name: 'Nome'

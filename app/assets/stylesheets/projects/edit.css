@@ -1,0 +1,47 @@
+/* Histórico de Anotações */
+.card-overflow {
+    max-height: 400px; /* Limite de altura para histórico longo */
+    overflow-y: auto; /* Rolagem caso necessário */
+}
+
+.annotation-item {
+    margin-bottom: 5px; /* Reduzido o espaço entre anotações */
+}
+
+.annotation-meta {
+    font-size: 0.85rem; /* Fonte menor para informações do autor e data */
+    color: #6c757d; /* Cor mais discreta */
+}
+
+.annotation-text {
+    font-size: 0.9rem; /* Fonte menor para o texto da anotação */
+    color: #343a40; /* Cor principal para o texto */
+}
+
+/* Separador */
+.annotation-item hr {
+    border-top: 1px solid #dee2e6;
+    margin: 8px 0; /* Menor espaçamento */
+}
+
+/* Formulário */
+.annotation-form .form-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.annotation-form textarea.form-control {
+    resize: vertical;
+    border-radius: 5px;
+}
+
+/* Títulos */
+.card-header h5 {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.text-secondary {
+    color: #6c757d;
+}

@@ -1,0 +1,69 @@
+<h2 class="my-4 text-center page-title">
+  Anotações e documentos do projeto Nº <%= @project.ric_number %>
+</h2>
+
+<div class="container project-annotations">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card shadow-sm mb-5">
+        <div class="card-header card-title-custom">
+          <span><i class="bi bi-chat-left-dots me-2"></i>Histórico de Anotações</span>
+        </div>
+        <div class="card-body card-overflow">
+          <% if @annotation_history.any? %>
+            <% @annotation_history.each do |history| %>
+              <div class="annotation-item mb-3">
+                <p class="annotation-meta mb-1">
+                  <strong><%= history.created_at.strftime("%d/%m/%Y %H:%M") %></strong> - <%= I18n.t("activerecord.attributes.user.role.#{history.user.role}") %> <%= history.user.display_name %>
+                </p>
+                <p class="annotation-text mb-0 text-muted"><%= history.annotation %></p>
+              </div>
+              <% unless history == @annotation_history.last %>
+                <hr class="my-3">
+              <% end %>
+            <% end %>
+          <% else %>
+            <p class="text-muted">Nenhuma anotação foi registrada ainda.</p>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-header card-title-custom">
+          <span><i class="bi bi-paperclip me-2"></i>Documentos</span>
+        </div>
+        <div class="card-body card-overflow">
+          <% if @project.attachments.attached? %>
+            <% @project.attachments.order(created_at: :desc).each do |attachment| %>
+              <div class="document-item mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="mb-1"><strong>Arquivo:</strong> <%= attachment.filename %></p>
+                    <p class="mb-1 text-muted"><strong>Anexado em:</strong> <%= attachment.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+                    <p class="mb-1 text-muted"><strong>Tamanho:</strong> <%= number_to_human_size(attachment.byte_size) %></p>
+                  </div>
+                  <div>
+                    <%= link_to rails_blob_path(attachment, disposition: "attachment"), class: 'custom-btn btn btn-primary btn-sm', download: attachment.filename do %>
+                      <i class="bi bi-download"></i> Download
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <% unless attachment == @project.attachments.last %>
+                <hr class="my-3">
+              <% end %>
+            <% end %>
+          <% else %>
+            <p class="text-muted">Nenhum documento foi anexado ainda.</p>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="text-start">
+        <%= link_to current_user.coordinator? ? coordinator_project_path(@project) : researcher_project_path(@project), class: 'custom-btn btn btn-secondary btn-sm shadow-sm' do %>
+          <i class="bi bi-arrow-left"></i> Voltar
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

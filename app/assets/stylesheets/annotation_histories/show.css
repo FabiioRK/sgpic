@@ -1,0 +1,52 @@
+/* Estilo específico para Anotações e Documentos */
+.project-annotations .card {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.project-annotations .card-header.card-title-custom {
+    background-color: #5a6268; /* Cinza escuro mais suave */
+    color: #f8f9fa; /* Branco claro */
+    font-size: 0.85rem; /* Tamanho de fonte menor */
+    font-weight: 600; /* Negrito moderado */
+    padding: 0.6rem; /* Reduzido para um layout mais compacto */
+    border-bottom: 1px solid #40831a; /* Linha decorativa */
+    text-transform: uppercase; /* Texto em maiúsculas */
+    letter-spacing: 0.03rem; /* Espaçamento levemente reduzido */
+}
+
+.project-annotations .card-header.card-title-custom span {
+    display: inline-block;
+    vertical-align: middle; /* Alinhamento vertical para ícones e texto */
+}
+
+.project-annotations p {
+    margin-bottom: 0.6rem;
+    line-height: 1.4; /* Melhor legibilidade */
+}
+
+.annotation-item {
+    padding: 0.5rem 0;
+}
+
+.annotation-meta {
+    font-size: 0.9rem;
+    color: #343a40; /* Cinza mais escuro */
+}
+
+.annotation-text {
+    font-size: 0.85rem;
+    color: #6c757d; /* Cinza claro */
+}
+
+.document-item {
+    padding: 0.5rem 0;
+}
+
+.project-annotations .btn {
+    font-size: 0.85rem; /* Botões discretos */
+}
+
+.text-muted {
+    font-size: 0.85rem; /* Legível, mas discreto */
+}

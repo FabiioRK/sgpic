@@ -1,0 +1,43 @@
+<% if resource.errors.any? %>
+  <div class="alert alert-danger" id="error_explanation" data-turbo-cache="false">
+    <h3 class="alert-heading"><i class="bi bi-exclamation-circle me-2"></i>Não foi possível enviar instruções</h3>
+    <ul class="mb-0">
+      <% resource.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="login-page d-flex align-items-center justify-content-center mt-5">
+  <div class="login-card shadow-lg p-5 rounded">
+    <div class="login-header text-center mb-4">
+      <h1 class="login-title">Recuperar senha</h1>
+      <p class="text-muted">Digite seu email para receber as instruções de recuperação de senha</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "form"}) do |f| %>
+      <div class="form-group mb-4">
+        <div class="input-wrapper">
+          <%= f.email_field :email, placeholder: "Digite seu email", autofocus: true, autocomplete: "email", class: "form-control form-control-modern" %>
+          <div type="button" class="input-field-icon password-toggle">
+            <i class="bi bi-envelope input-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-grid mb-4">
+        <%= f.submit "Enviar instruções", class: "btn-modern", data: { info_modal: true,
+                                                                       info_message: "Instruções de recuperação enviadas com sucesso!",
+                                                                       redirect_url: new_user_session_path,
+                                                                       icon_color: "#007bff",
+                                                                       timer: 5000 }  %>
+      </div>
+
+  <% end %>
+
+    <div class="text-center mt-3">
+      <%= link_to "Voltar para login", new_session_path(resource_name), class: "text-decoration-none text-muted small" %>
+    </div>
+  </div>
+</div>

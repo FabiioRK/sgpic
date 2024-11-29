@@ -1,0 +1,105 @@
+<div class="container">
+  <h2 class="page-title text-center mb-4 mt-5">
+    <% if params[:query].present? %>
+      Lista de Projetos com o filtro: <%= params[:query] %>
+    <% else %>
+      Lista de Projetos
+    <% end %>
+  </h2>
+
+  <div class="btn-filter-block text-center mb-lg-5">
+    <% user = current_user %>
+    <% statuses = {
+      'todos' => 'Todos',
+      'em_analise' => 'Em análise',
+      'pendente' => 'Pendente',
+      'aprovado' => 'Aprovado',
+      'interrompido' => 'Interrompido'
+    } %>
+    <% if @user_projects.present? %>
+      <% statuses.each do |status_key, status_label| %>
+        <% count = status_key == 'todos' ? @user_projects.count : @user_projects.where(project_status: status_key).count %>
+        <% path = case user.role
+                  when 'supervisor'
+                    supervisor_projects_path(status: (status_key unless status_key == 'todos'))
+                  when 'coordinator'
+                    coordinator_projects_path(user.coordinator.id, status: (status_key unless status_key == 'todos'))
+                  when 'researcher'
+                    researcher_projects_path(user.researcher.id, status: (status_key unless status_key == 'todos'))
+                  else
+                    '#'
+                  end %>
+        <%= link_to "#{status_label} (#{count})", path,
+                    class: "btn-filter btn btn-outline-primary mx-1 #{'active' if params[:status] == status_key || (params[:status].nil? && status_key == 'todos')}" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if @projects.any? %>
+    <div class="row g-4">
+      <% @projects.each do |project| %>
+        <div class="col-md-4">
+          <div class="card shadow-sm project-card h-100">
+            <div class="card-body">
+              <h5 class="card-title text-primary">
+                <i class="bi bi-bookmark-check me-2"></i>
+                <%= project.project_title %>
+              </h5>
+              <p class="mb-1">
+                <i class="bi bi-calendar-event me-2"></i>
+                <strong>Data de Criação:</strong> <%= project.created_at.strftime("%d/%m/%Y") %>
+              </p>
+              <p class="mb-1">
+                <i class="bi bi-card-text me-2"></i>
+                <strong>RIC:</strong> <%= project.ric_number %>
+              </p>
+              <p class="mb-1">
+                <i class="bi bi-person-circle me-2"></i>
+                <strong>Estudante:</strong> <%= project.student.name %>
+              </p>
+              <p class="mb-1">
+                <i class="bi bi-clipboard-check me-2"></i>
+                <strong>Status:</strong>
+                <%= Project.human_attribute_name("project_status.#{project.project_status}") %>
+              </p>
+              <% if project.feedback_date.present? %>
+                <p class="mb-1">
+                  <i class="bi bi-clock-history me-2"></i>
+                  <strong>Feedback:</strong> <%= project.feedback_date.strftime("%d/%m/%Y") %>
+                </p>
+              <% end %>
+            </div>
+            <div class="card-footer bg-light text-end">
+              <% path = case current_user.role
+                        when 'supervisor' then supervisor_project_path(project)
+                        when 'coordinator' then coordinator_project_path(project.coordinator, project)
+                        when 'researcher' then researcher_project_path(project.researcher, project)
+                        end %>
+              <%= link_to "Detalhes", path, class: 'btn btn-primary btn-sm custom-btn' %>
+            </div>
+          </div>
+
+        </div>
+
+      <% end %>
+      <div class="pagination">
+        <%= paginate @projects, window: 2 %>
+      </div>
+    </div>
+  <% else %>
+
+    <div class="text-center my-5 text-muted">
+      <i class="bi bi-clipboard-x display-1"></i>
+      <h3 class="mt-4">Nenhum projeto encontrado</h3>
+      <% if params[:query].present? %>
+        <p>Não foi encontrado nenhum projeto com a pesquisa "<%= params[:query] %>".</p>
+      <% elsif Project.project_statuses.include?(params[:status])%>
+        <% status = I18n.t("activerecord.attributes.project.project_statuses.#{params[:status]}") %>
+        <p>Assim que projetos estiverem com o status <%= status.downcase %>, eles aparecerão aqui.</p>
+      <% else %>
+        <p>Assim que novos projetos forem adicionados, eles aparecerão aqui.</p>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>

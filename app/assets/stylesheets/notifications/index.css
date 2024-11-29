@@ -1,0 +1,39 @@
+.notifications-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.notifications-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+.notifications-list .list-group-item {
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+    margin-bottom: 10px;
+}
+
+.notifications-list .list-group-item.unread {
+    background-color: #f8f9fa;
+    border-left: 4px solid #007bff;
+}
+
+.notifications-list .list-group-item.read {
+    background-color: #ffffff;
+    border-left: 4px solid #28a745;
+}
+
+.notifications-list .list-group-item h5 {
+    font-size: 1rem;
+}
+
+.notifications-list .list-group-item small {
+    font-size: 0.85rem;
+}
+
+.notifications-list .btn-outline-primary {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+}

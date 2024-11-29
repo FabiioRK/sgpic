@@ -1,0 +1,115 @@
+/* Corpo principal */
+.researcher-list-container {
+    font-size: 0.9rem;
+    padding: 0 15px;
+}
+
+/* Tabela */
+.researcher-list-container .researcher-table {
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.researcher-list-container .researcher-table th {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #495057;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 10px;
+}
+
+.researcher-list-container .researcher-table td {
+    font-size: 0.85rem;
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.researcher-list-container .researcher-table td:last-child {
+    text-align: center;
+}
+
+.researcher-list-container .status-badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.15rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.researcher-list-container .bg-success {
+    background-color: #4C8463 !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.researcher-list-container .bg-danger {
+    background-color: #C04848 !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Botões de ação */
+.researcher-list-container .action-buttons .btn {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+}
+
+.researcher-list-container .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .researcher-list-container .researcher-table {
+        border: none;
+    }
+
+    .researcher-list-container .researcher-table thead {
+        display: none;
+    }
+
+    .researcher-list-container .researcher-table tr {
+        display: block;
+        margin-bottom: 15px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+    }
+
+    .researcher-list-container .researcher-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: none;
+    }
+
+    .researcher-list-container .researcher-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #495057;
+        flex-basis: 40%;
+    }
+
+    .researcher-list-container .researcher-table td:last-child {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .researcher-list-container .action-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}

@@ -1,0 +1,159 @@
+/* Container principal */
+.welcome-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Cabeçalho */
+.welcome-header {
+    background: #5a6268;
+    color: #fff;
+    padding: 30px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.welcome-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Seções */
+.welcome-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: justify;
+    width: 100%; /* Garante largura total no mobile */
+}
+
+.welcome-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.welcome-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.welcome-section ul li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #0d4218;
+}
+
+.welcome-section ul li i {
+    color: #28a745;
+    font-size: 1.2rem;
+}
+
+/* Contato */
+.welcome-contact {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 100%; /* Garante largura total no mobile */
+}
+
+.contact-title {
+    font-size: 1.5rem;
+    color: #0d4218;
+    margin-bottom: 15px;
+}
+
+.welcome-contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+.welcome-contact ul li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.welcome-contact ul li i {
+    color: #28a745;
+    font-size: 1.2rem;
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .welcome-container {
+        padding: 10px; /* Reduz o espaçamento lateral no mobile */
+    }
+
+    .welcome-header {
+        padding: 20px 10px;
+    }
+
+    .welcome-title {
+        font-size: 1.8rem;
+    }
+
+    .welcome-section {
+        padding: 15px;
+        margin-bottom: 15px; /* Reduz o espaçamento entre os cards */
+    }
+
+    .contact-title {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-title {
+        font-size: 1.5rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 1rem;
+    }
+
+    .welcome-section p {
+        font-size: 0.9rem;
+    }
+
+    .contact-title {
+        font-size: 1.2rem;
+    }
+
+    .welcome-section {
+        padding: 15px;
+    }
+
+    .welcome-contact {
+        padding: 15px;
+    }
+}

@@ -1,0 +1,45 @@
+<h3 class="page-title text-center my-4 mt-5">Editar Projeto Nº <%= @project.ric_number %></h3>
+
+<% if @project.errors.any? %>
+  <div class="alert alert-danger" id="error_explanation" data-turbo-cache="false">
+    <h3 class="alert-heading"><i class="bi bi-exclamation-circle me-2"></i><%= I18n.t("errors.messages.not_saved", count: @project.errors.count, resource: @project.class.model_name.human.downcase) %></h3>
+    <ul class="mb-0">
+      <% @project.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="container project-annotations">
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <div class="card border-light shadow-sm mb-5">
+        <div class="card-header card-title-custom">
+          <span><i class="bi bi-chat-left-dots me-2"></i>Histórico de Anotações</span>
+        </div>
+        <div class="card-body card-overflow">
+          <% if @annotation_history&.any? %>
+            <% @annotation_history.each do |history| %>
+              <div class="annotation-item">
+                <p class="annotation-meta mb-1">
+                  <strong><%= history.created_at.strftime("%d/%m/%Y %H:%M") %></strong> - <%= I18n.t("activerecord.attributes.user.role.#{history.user.role}") %> <%= history.user.display_name %>
+                </p>
+                <p class="annotation-text mb-2"><%= history.annotation %></p>
+              </div>
+              <% unless history == @annotation_history.last %>
+                <hr>
+              <% end %>
+            <% end %>
+          <% else %>
+            <p class="text-muted">Nenhuma anotação foi registrada ainda.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-container">
+  <%= render partial: "form_edit", locals: { project: @project, annotation_history: @annotation_history } %>
+</div>

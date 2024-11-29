@@ -1,0 +1,47 @@
+.footer {
+    background-color: rgb(52, 58, 64); 
+    color: #ffffff;
+}
+
+.footer h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.footer p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.footer ul {
+    padding: 0;
+    list-style: none;
+}
+
+.footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer ul li a {
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.footer ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer .bi {
+    margin-right: 5px;
+    font-size: 1rem;
+}
+
+.footer .small {
+    font-size: 0.85rem;
+}
+
+.footer .border-light {
+    border-color: rgba(255, 255, 255, 0.2); 
+}

@@ -1,0 +1,54 @@
+<div class="coordinator-list-container container my-5">
+  <h2 class="page-title text-center mb-5 mt-5">Lista de Coordenadores</h2>
+
+  <table class="coordinator-table table table-hover shadow-sm">
+    <thead class="table-primary">
+    <tr>
+      <th><i class="bi bi-person-circle me-2"></i><%= Researcher.human_attribute_name("name") %></th>
+      <th><i class="bi bi-envelope me-2"></i><%= User.human_attribute_name("email") %></th>
+      <th><i class="bi bi-check-circle me-2"></i>Status</th>
+      <th class="text-center"><i class="bi bi-gear me-2"></i>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @coordinators.each do |coordinator| %>
+      <tr>
+        <td data-label="Nome"><%= coordinator.name %></td>
+        <td data-label="E-mail"><%= coordinator.user.email %></td>
+        <td>
+          <% if coordinator.user.active? %>
+            <span class="badge status-badge bg-success">Ativo</span>
+          <% else %>
+            <span class="badge status-badge bg-danger">Inativo</span>
+          <% end %>
+        </td>
+        <td data-label="Ações" class="text-center">
+          <div class="action-buttons d-flex justify-content-center gap-2">
+            <%= link_to coordinator_path(coordinator), class: "btn btn-info btn-sm custom-btn" do %>
+              <i class="bi bi-eye"></i> Visualizar
+            <% end %>
+
+            <%= link_to coordinator.user.active? ? deactivate_coordinator_path(coordinator) : activate_coordinator_path(coordinator),
+                        method: :patch,
+                        class: coordinator.user.active? ? 'btn btn-danger btn-sm custom-btn confirm-post' : 'btn btn-success btn-sm custom-btn confirm-post',
+                        data: { sweet_confirm: "Tem certeza que deseja #{coordinator.user.active? ? 'desativar' : 'ativar'} este coordenador?" } do %>
+              <i class="bi <%= coordinator.user.active? ? 'bi-x-circle' : 'bi-check-circle' %>"></i> <%= coordinator.user.active? ? 'Desativar' : 'Ativar' %>
+            <% end %>
+
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <%= paginate @coordinators, window: 2 %>
+  </div>
+
+  <div class="text-start mt-4">
+    <%= link_to root_path, class: "btn btn-secondary btn-sm custom-btn" do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+pt-BR:
+  activerecord:
+    models:
+      annotation_history:
+        one: 'Anotação'
+        other: 'Anotaçóes'
+    attributes:
+      annotation_history:
+        annotation: 'Anotação'
+

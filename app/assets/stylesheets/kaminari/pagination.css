@@ -1,0 +1,57 @@
+/* Arquivo: paginator.css */
+
+/* Estilo geral para a navegação */
+.pagination {
+    padding: 0;
+    list-style: none;
+}
+
+/* Estilo para os itens da página */
+.page-item {
+    margin-left: 0.2rem;
+    display: inline-block;
+}
+
+.page-item a {
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #4F709C;
+    color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.page-item a:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Estilo para o item ativo */
+.page-item.active a {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    cursor: default;
+}
+
+/* Estilo para itens desabilitados */
+.page-item.disabled a {
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-color: #ddd;
+    cursor: not-allowed;
+}
+
+/* Ajuste de responsividade */
+@media (max-width: 768px) {
+    .pagination {
+        justify-content: center;
+    }
+    .page-item a {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+}

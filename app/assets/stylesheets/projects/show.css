@@ -1,0 +1,29 @@
+.project-view .card {
+    border-radius: 8px; /* Bordas levemente mais suaves */
+    overflow: hidden;
+}
+
+.project-view .card-header.card-title-custom {
+    background-color: #5a6268; /* Cinza escuro mais suave */
+    color: #f8f9fa; /* Branco claro */
+    font-size: 0.85rem; /* Tamanho de fonte menor */
+    font-weight: 600; /* Negrito moderado */
+    padding: 0.6rem; /* Reduzido para um layout mais compacto */
+    border-bottom: 1px solid #40831a; /* Linha decorativa */
+    text-transform: uppercase; /* Texto em maiúsculas */
+    letter-spacing: 0.03rem; /* Espaçamento levemente reduzido */
+}
+
+.project-view .card-header.card-title-custom span {
+    display: inline-block;
+    vertical-align: middle; /* Alinhamento vertical para ícones e texto */
+}
+
+.project-view .btn {
+    font-size: 0.85rem; /* Botões discretos */
+}
+
+.project-view p {
+    margin-bottom: 0.6rem; /* Reduz o espaço entre os parágrafos */
+    line-height: 1.4; /* Melhor legibilidade */
+}

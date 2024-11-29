@@ -1,0 +1,39 @@
+<div class="history-page container my-5">
+  <h1 class="page-title text-center mb-5 mt-5">Histórico de Atualizações</h1>
+
+  <div class="table-responsive history-table-container">
+    <table class="table table-hover shadow-sm history-table">
+      <thead class="table-primary">
+      <tr>
+        <th scope="col"><i class="bi bi-person-fill me-2"></i>Usuário</th>
+        <th scope="col"><i class="bi bi-clock me-2"></i>Data e Horário</th>
+        <th scope="col" class="text-center"><i class="bi bi-gear me-2"></i>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @histories.each do |history| %>
+        <tr>
+          <td data-label="Usuário">
+            <%= I18n.t("activerecord.attributes.user.role.#{history.user.role}") %> - <%= history.user.display_name %>
+          </td>
+          <td data-label="Data e Horário"><%= l(history.edited_at, format: :long) %></td>
+          <td data-label="Ações" class="text-center">
+            <%= link_to notice_history_path(@notice, history), class: 'custom-btn btn btn-info btn-sm' do %>
+              <i class="bi bi-eye"></i> Ver detalhes
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    <%= paginate @histories, window: 2 %>
+  </div>
+
+  <div class="d-flex justify-content-start mt-4">
+    <%= link_to notice_path(@notice), class: 'custom-btn btn btn-secondary btn-sm' do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+  </div>
+</div>

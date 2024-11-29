@@ -1,0 +1,15 @@
+pt-BR:
+  activerecord:
+    models:
+      notice:
+        one: 'Edital'
+        other: 'Editais'
+    attributes:
+      notice:
+        start_date: 'Data de início'
+        end_date: 'Data final'
+        name: 'Nome'
+        description: 'Descrição'
+        created_by: 'Criado por'
+        created_at: 'Criado em'
+        active: 'Ativo'

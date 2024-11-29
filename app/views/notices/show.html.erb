@@ -1,0 +1,94 @@
+<div class="container my-5">
+  <h2 class="page-title text-center mb-4">
+    Detalhes do Edital: <%= @notice.name %>
+  </h2>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="notice-details card shadow-sm p-4">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <p>
+              <i class="bi bi-calendar-date"></i>
+              <strong><%= Notice.human_attribute_name("start_date") %>:</strong>
+              <%= @notice.start_date.strftime("%d/%m/%Y") %>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p>
+              <i class="bi bi-calendar-x"></i>
+              <strong><%= Notice.human_attribute_name("end_date") %>:</strong>
+              <%= @notice.end_date.strftime("%d/%m/%Y") %>
+            </p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <p>
+              <i class="bi bi-person-circle"></i>
+              <strong><%= Notice.human_attribute_name("created_by") %>:</strong>
+              <%= I18n.t("activerecord.attributes.user.role.#{@notice.user.role}") %> <%= @notice.user.display_name %>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p>
+              <i class="bi bi-clock"></i>
+              <strong><%= Notice.human_attribute_name("created_at") %>:</strong>
+              <%= @notice.created_at.strftime("%d/%m/%Y, %H:%M") %>
+            </p>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <p>
+            <i class="bi bi-file-earmark-text"></i>
+            <strong><%= Notice.human_attribute_name("description") %>:</strong>
+          </p>
+          <div class="text-muted">
+            <%= simple_format(@notice.description.presence || "Não informado.") %>
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <p>
+            <i class="bi <%= @notice.active? ? 'bi-check-circle text-success' : 'bi-x-circle text-danger' %>"></i>
+            <strong>Status:</strong>
+            <span class="<%= @notice.active? ? 'text-success' : 'text-danger' %>">
+              <%= @notice.active? ? 'Ativo' : 'Inativo' %>
+            </span>
+          </p>
+        </div>
+
+        <% if @notice.notice_histories.any? && (current_user.supervisor? || current_user.coordinator?) %>
+          <div class="mb-3">
+            <%= link_to 'Histórico de atualizações', history_notice_path(@notice), class: 'btn btn-primary btn-sm custom-btn' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-start gap-2 mt-4">
+    <%= link_to notices_path, class: 'btn btn-secondary btn-sm custom-btn' do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+
+    <% if user_signed_in? && (current_user.coordinator? || current_user.supervisor?) %>
+      <%= link_to edit_notice_path(@notice), class: 'btn btn-warning btn-sm custom-btn' do %>
+        <i class="bi bi-pencil"></i> Editar
+      <% end %>
+
+      <%= link_to toggle_active_notice_path(@notice), method: :patch,
+                  class: @notice.active? ? 'btn btn-danger btn-sm custom-btn confirm-post' : 'btn btn-success btn-sm custom-btn confirm-post',
+                  data: { sweet_confirm: "Tem certeza que deseja #{@notice.active? ? 'desativar' : 'ativar'} o edital '#{@notice.name}'?" } do %>
+        <i class="bi <%= @notice.active? ? 'bi-x-circle' : 'bi-check-circle' %>"></i> <%= @notice.active? ? 'Desativar' : 'Ativar' %>
+      <% end %>
+
+      <%= link_to notice_path(@notice), method: :delete, class: 'btn btn-dark btn-sm custom-btn delete-post', data: { sweet_confirm: "Você está prestes a excluir o edital '#{@notice.name}'. Tem certeza disso?'" } do %>
+        <i class="bi bi-trash"></i> Excluir
+      <% end %>
+    <% end %>
+  </div>
+</div>

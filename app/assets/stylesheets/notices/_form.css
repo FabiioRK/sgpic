@@ -1,0 +1,20 @@
+/* Estilo geral para o formulário */
+.notice-form {
+    font-size: 0.9rem;
+}
+
+.notice-form .form-label {
+    font-weight: 600;
+    color: #343a40; /* Cinza escuro */
+}
+
+.notice-form .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.notice-form .form-control:focus {
+    border-color: #80bdff; /* Azul suave */
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}

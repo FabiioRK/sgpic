@@ -1,0 +1,54 @@
+<div class="update-details-page container my-5">
+  <h1 class="page-title text-center mb-4 mt-5">Detalhes da Atualização</h1>
+
+  <div class="card shadow-sm p-4 mb-4">
+    <p><strong><i class="bi bi-person-fill me-2"></i>Usuário:</strong> <%= @history.user.display_name %></p>
+    <p><strong><i class="bi bi-clock-fill me-2"></i>Data e Horário:</strong> <%= l(@history.edited_at, format: :long) %></p>
+  </div>
+
+  <h4 class="section-title mb-4">Mudanças Realizadas</h4>
+
+  <div class="card shadow-sm p-4">
+    <% if @history.changes_made.any? %>
+      <% @history.changes_made.each do |attribute, values| %>
+        <div class="change-item mb-4">
+          <h5 class="text-primary mb-2">
+            <i class="bi bi-pencil-square me-2"></i><%= attribute.humanize %>
+          </h5>
+          <div class="mb-3">
+            <strong>Antes:</strong>
+            <div class="text-muted bg-light p-2 rounded">
+              <% if values[0].present? && values[0] =~ /^\d{4}-\d{2}-\d{2}$/ %>
+                <%= Date.parse(values[0]).strftime('%d/%m/%Y') %>
+              <% else %>
+                <%= simple_format(values[0].presence || 'Não informado') %>
+              <% end %>
+            </div>
+          </div>
+          <div class="mb-3">
+            <strong>Depois:</strong>
+            <div class="text-success bg-light p-2 rounded">
+              <% if values[1].present? && values[1] =~ /^\d{4}-\d{2}-\d{2}$/ %>
+                <%= Date.parse(values[1]).strftime('%d/%m/%Y') %>
+              <% else %>
+                <%= simple_format(values[1].presence || 'Não informado') %>
+              <% end %>
+            </div>
+          </div>
+          <% unless attribute == @history.changes_made.keys.last %>
+            <hr class="my-3">
+          <% end %>
+        </div>
+      <% end %>
+
+    <% else %>
+      <p class="text-muted">Nenhuma mudança foi registrada nesta atualização.</p>
+    <% end %>
+  </div>
+
+  <div class="d-flex justify-content-start mt-4">
+    <%= link_to history_notice_path(@notice), class: 'custom-btn btn btn-secondary btn-sm' do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+  </div>
+</div>

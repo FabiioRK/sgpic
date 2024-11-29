@@ -1,0 +1,41 @@
+<div class="profile-container container my-5">
+  <h2 class="page-title text-center mt-5 mb-5">Dados do Perfil</h2>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header profile-header">
+      <h5 class="mb-0"><i class="bi bi-person-circle me-2"></i>Informações Pessoais</h5>
+    </div>
+    <div class="card-body">
+      <p><strong><%= Researcher.human_attribute_name("name") %>:</strong> <%= @coordinator.name %></p>
+      <p><strong><%= Researcher.human_attribute_name("phone_number") %>:</strong> <%= @coordinator.phone_number %></p>
+      <p><strong><%= Researcher.human_attribute_name("academic_field") %>:</strong> <%= @coordinator.academic_field %></p>
+      <p><strong><%= Researcher.human_attribute_name("email") %>:</strong> <%= @coordinator.user.email %></p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header profile-header">
+      <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>Endereço</h5>
+    </div>
+    <div class="card-body">
+      <p>
+        <strong><%= Address.model_name.human %>:</strong>
+        <%= @coordinator.address.street %>, <%= @coordinator.address.district %>, <%= @coordinator.address.complement %>,
+        <%= @coordinator.address.city %>-<%= @coordinator.address.state %>, <%= @coordinator.address.postal_code %>
+      </p>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-start gap-2 mt-4">
+    <% if current_user.role == 'supervisor' %>
+      <%= link_to coordinators_path, class: "btn btn-sm btn-secondary custom-btn" do %>
+        <i class="bi bi-arrow-left"></i> Voltar
+      <% end %>
+    <% else %>
+      <%= link_to root_path, class: "btn btn-sm btn-secondary custom-btn" do %>
+        <i class="bi bi-arrow-left"></i> Voltar
+      <% end %>
+    <% end %>
+    <%= link_to 'Editar', edit_coordinator_path(@coordinator), class: "btn btn-sm btn-warning custom-btn" %>
+  </div>
+</div>

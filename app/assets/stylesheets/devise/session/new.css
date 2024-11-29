@@ -1,0 +1,162 @@
+/* Estilos exclusivos para a página de login */
+.login-page {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    text-align: center;
+}
+
+.login-header {
+    color: #333;
+}
+
+.login-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.brand-highlight {
+    color: #28a745;
+}
+
+.text-muted {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Estilização dos inputs */
+/* Estilo para remover completamente o focus nativo */
+.form-control-modern {
+    border: 1px solid #ccc !important; /* Borda padrão */
+    padding: 0.8rem 1.5rem !important; /* Ajuste de espaçamento */
+    font-size: 1rem !important;
+    width: 100% !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Remover o estilo nativo de focus */
+.form-control-modern:focus {
+    outline: none !important; /* Remove o outline padrão */
+    border-color: #28a745 !important; /* Cor verde para o foco */
+    box-shadow: 0 0 1px rgba(40, 167, 69, 0.5) !important; /* Borda leve no foco */
+}
+
+/* Adicione um estilo global para garantir consistência */
+input:focus, textarea:focus, select:focus {
+    outline: none !important; /* Remove o outline padrão */
+    box-shadow: none !important; /* Remove qualquer sombra padrão */
+    border: 1px solid #28a745 !important; /* Cor de borda no foco */
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+.input-icon:hover {
+    color: #28a745;
+}
+
+/* Botão "Entrar" */
+.btn-modern {
+    background: linear-gradient(90deg, #28a745, #218838); /* Gradiente elegante */
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 6px; /* Bordas suaves */
+    padding: 0.9rem;
+    font-size: 1rem;
+    text-transform: uppercase; /* Texto em maiúsculas */
+    width: 100%;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    letter-spacing: 0.05rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ícone no botão */
+.btn-modern i {
+    margin-right: 0.5rem;
+    font-size: 1.2rem; /* Ajuste para ícone */
+}
+
+/* Efeito hover */
+.btn-modern:hover {
+    background: linear-gradient(90deg, #218838, #1e7e34); /* Gradiente mais escuro */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra mais intensa */
+    transform: translateY(-2px); /* Eleva levemente o botão */
+    cursor: pointer;
+}
+
+/* Efeito ao clicar */
+.btn-modern:active {
+    background: linear-gradient(90deg, #1e7e34, #186a2d); /* Verde mais escuro */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px); /* Move levemente para baixo */
+}
+
+/* Foco */
+.btn-modern:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5); /* Destaque verde suave */
+}
+
+/* Adaptação para telas pequenas */
+@media (max-width: 576px) {
+    .btn-modern {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+    }
+}
+
+
+/* Links */
+.login-card a {
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.login-card a:hover {
+    color: #28a745;
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .login-card {
+        padding: 1.5rem;
+    }
+
+    .login-title {
+        font-size: 1.6rem;
+    }
+
+    .form-control-modern {
+        padding: 0.6rem 1.2rem;
+    }
+
+    .btn-modern {
+        font-size: 1rem;
+    }
+}

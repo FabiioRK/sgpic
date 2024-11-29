@@ -1,0 +1,22 @@
+.notice-form {
+    width: 100%;
+    gap: 15px; /* Espaçamento entre os campos */
+}
+
+.notice-form .form-group {
+    flex-grow: 1; /* Ajusta o tamanho de campos para serem mais fluidos */
+    min-width: 250px; /* Garante consistência em telas menores */
+}
+
+.notice-form .form-group textarea {
+    resize: vertical; /* Permite ajuste vertical no campo de texto */
+}
+
+.notice-form .form-actions {
+    margin-top: 20px;
+}
+
+.notice-form .form-label {
+    font-size: 0.9rem;
+    color: #495057;
+}

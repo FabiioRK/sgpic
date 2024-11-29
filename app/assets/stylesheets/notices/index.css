@@ -1,0 +1,121 @@
+/* Lista de Editais */
+.notice-list-container {
+    font-size: 0.9rem;
+    padding: 0 15px;
+}
+
+/* Itens da lista */
+.notice-list-container .list-group-item {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 20px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.notice-list-container .list-group-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Título */
+.notice-list-container .list-group-item h5 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Datas */
+.notice-list-container .list-group-item small {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* Botões */
+.notice-list-container .list-group-item .btn {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.notice-list-container .list-group-item .btn i {
+    margin-right: 5px;
+}
+
+/* Rodapé de botões */
+.notice-list-container .list-group-item .d-flex {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Filtro */
+.notice-list-container .btn-filter-block {
+    margin-bottom: 30px;
+}
+
+.notice-list-container .btn-filter {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Mensagem de "Nenhum Edital Encontrado" */
+.notice-list-container .empty-state {
+    text-align: center;
+    margin-top: 50px;
+    color: #6c757d;
+}
+
+.notice-list-container .empty-state i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.notice-list-container .empty-state h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .notice-list-container .list-group-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .notice-list-container .list-group-item h5 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .notice-list-container .list-group-item small {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .notice-list-container .list-group-item .d-flex {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .notice-list-container .btn-filter-block {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .notice-list-container .btn-filter {
+        margin-bottom: 10px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+}

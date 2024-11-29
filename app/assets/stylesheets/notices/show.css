@@ -1,0 +1,24 @@
+/* Estilo para os detalhes do edital */
+.notice-details {
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.notice-details p {
+    margin-bottom: 0.8rem;
+}
+
+.notice-details .custom-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: 5px;
+}
+
+/* Botões */
+.custom-btn {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.custom-btn:hover {
+    opacity: 0.9;
+}

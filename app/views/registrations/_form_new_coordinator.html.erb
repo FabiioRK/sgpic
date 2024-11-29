@@ -1,0 +1,91 @@
+<% if user.errors.any? %>
+  <div class="alert alert-danger">
+    <p><strong><i class="bi bi-exclamation-circle"></i> Verifique os erros abaixo:</strong></p>
+    <ul class="mb-0">
+      <% user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for(user, url: create_coordinator_registration_path, html: { class: "form-horizontal confirm-save", data: { turbo: false } }) do |f| %>
+  <h4 class="section-title mb-4">Informações do coordenador</h4>
+  <%= f.fields_for :coordinator do |coordinator_fields| %>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= coordinator_fields.label :name, required_label(:name, 'coordinator'), class: "form-label small-label" %>
+        <%= coordinator_fields.text_field :name, class: "form-control form-control-sm" %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= coordinator_fields.label :phone_number, required_label(:phone_number, 'coordinator'), class: "form-label small-label" %>
+        <%= coordinator_fields.text_field :phone_number, class: "form-control form-control-sm", maxlength: 15, data: { mask: "phone" } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <%= coordinator_fields.label :academic_field, required_label(:academic_field, 'coordinator'), class: "form-label small-label" %>
+        <%= coordinator_fields.text_field :academic_field, class: "form-control form-control-sm" %>
+      </div>
+    </div>
+
+    <h4 class="section-title mt-4 mb-3">Endereço</h4>
+    <%= coordinator_fields.fields_for :address do |address_fields| %>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <%= address_fields.label :postal_code, required_label(:postal_code, 'address'), class: "form-label small-label" %>
+          <%= address_fields.text_field :postal_code, class: "form-control form-control-sm", data: { mask: "postal_code", autocomplete: "cep", scope: "user[coordinator_attributes][address_attributes]" } %>
+        </div>
+        <div class="col-md-8 mb-3">
+          <%= address_fields.label :street, required_label(:street, 'address'), class: "form-label small-label" %>
+          <%= address_fields.text_field :street, class: "form-control form-control-sm", data: { field: "street" } %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= address_fields.label :district, required_label(:district, 'address'), class: "form-label small-label" %>
+          <%= address_fields.text_field :district, class: "form-control form-control-sm", data: { field: "district" } %>
+        </div>
+        <div class="col-md-6 mb-3">
+          <%= address_fields.label :complement, class: "form-label small-label" %>
+          <%= address_fields.text_field :complement, class: "form-control form-control-sm" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= address_fields.label :city, required_label(:city, 'address'), class: "form-label small-label" %>
+          <%= address_fields.text_field :city, class: "form-control form-control-sm", data: { field: "city" } %>
+        </div>
+        <div class="col-md-6 mb-3">
+          <%= address_fields.label :state, required_label(:state, 'address'), class: "form-label small-label" %>
+          <%= address_fields.text_field :state, class: "form-control form-control-sm", data: { field: "state" } %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <h4 class="section-title mt-4 mb-3">Credenciais</h4>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :email, required_label(:email, 'user'), class: "form-label small-label" %>
+      <%= f.email_field :email, class: "form-control form-control-sm", data: { mask: "email" } %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.label :password, required_label(:password, 'user'), class: "form-label small-label" %>
+      <%= f.password_field :password, class: "form-control form-control-sm" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :password_confirmation, required_label(:password_confirmation, 'user'), class: "form-label small-label" %>
+      <%= f.password_field :password_confirmation, class: "form-control form-control-sm" %>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-start gap-2 mt-4">
+    <%= link_to root_path, class: "btn btn-sm btn-secondary custom-btn" do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+    <%= f.submit 'Cadastrar', class: "btn btn-sm btn-success custom-btn" %>
+  </div>
+<% end %>

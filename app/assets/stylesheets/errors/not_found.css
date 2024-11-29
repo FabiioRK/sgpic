@@ -1,0 +1,66 @@
+/* Estilos exclusivos para a página de erro 404 */
+.btn-error {
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    max-width: 300px;
+}
+
+.btn-error:hover {
+    color: #ffffff; !important;
+}
+
+.error-page {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa; /* Fundo suave */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff; /* Texto neutro */
+    padding: 2rem;
+}
+
+/* Código do erro */
+.error-code {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #28a745; /* Verde em destaque */
+    margin-bottom: 1rem;
+}
+
+/* Mensagem de erro */
+.error-message {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333; /* Preto suave */
+    margin-bottom: 1rem;
+}
+
+/* Descrição */
+.error-description {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .error-code {
+        font-size: 4rem;
+    }
+
+    .error-message {
+        font-size: 1.5rem;
+    }
+
+    .error-description {
+        font-size: 0.9rem;
+    }
+
+    .btn-error {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.2rem;
+    }
+}

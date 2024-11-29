@@ -1,0 +1,50 @@
+<div class="researcher-list-container container my-5">
+  <h2 class="page-title text-center mb-5 mt-5">Lista de Pesquisadores</h2>
+
+  <table class="researcher-table table table-hover shadow-sm">
+    <thead class="table-primary">
+    <tr>
+      <th><i class="bi bi-person-circle me-2"></i><%= Researcher.human_attribute_name("name") %></th>
+      <th><i class="bi bi-envelope me-2"></i><%= User.human_attribute_name("email") %></th>
+      <th><i class="bi bi-check-circle me-2"></i>Status</th>
+      <th class="text-center"><i class="bi bi-gear me-2"></i>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @researchers.each do |researcher| %>
+      <tr>
+        <td data-label="Nome"><%= researcher.name %></td>
+        <td data-label="E-mail"><%= researcher.user.email %></td>
+        <td data-label="Status">
+          <% if researcher.user.active? %>
+            <span class="badge status-badge bg-success">Ativo</span>
+          <% else %>
+            <span class="badge status-badge bg-danger">Inativo</span>
+          <% end %>
+        </td>
+        <td data-label="Ações" class="text-center">
+          <div class="action-buttons d-flex justify-content-center gap-2">
+            <%= link_to researcher_path(researcher), class: "btn btn-info btn-sm custom-btn" do %>
+              <i class="bi bi-eye"></i> Visualizar
+            <% end %>
+
+            <%= link_to researcher.user.active? ? deactivate_researcher_path(researcher) : activate_researcher_path(researcher),
+                        method: :patch,
+                        class: researcher.user.active? ? 'btn btn-danger btn-sm custom-btn confirm-post' : 'btn btn-success btn-sm custom-btn confirm-post',
+                        data: { sweet_confirm: "Tem certeza que deseja #{researcher.user.active? ? 'desativar' : 'ativar'} este coordenador?" } do %>
+              <i class="bi <%= researcher.user.active? ? 'bi-x-circle' : 'bi-check-circle' %>"></i> <%= researcher.user.active? ? 'Desativar' : 'Ativar' %>
+            <% end %>
+
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="text-start mt-4">
+    <%= link_to root_path, class: "btn btn-secondary btn-sm custom-btn" do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+  </div>
+</div>

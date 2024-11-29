@@ -1,0 +1,98 @@
+/* Escopo específico para a página de histórico */
+.history-page {
+    font-size: 0.9rem;
+}
+
+/* Contêiner da Tabela */
+.history-page .history-table-container {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* Tabela */
+.history-page .history-table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.history-page .history-table th {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #495057;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 10px;
+    /*background-color: #f8f9fa;*/
+}
+
+.history-page .history-table td {
+    font-size: 0.85rem;
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Última coluna centralizada */
+.history-page .history-table td:last-child {
+    text-align: center;
+}
+
+/* Botões de ação */
+.history-page .custom-btn {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .history-page .history-table-container {
+        border: none;
+    }
+
+    .history-page .history-table {
+        border: none;
+    }
+
+    .history-page .history-table thead {
+        display: none;
+    }
+
+    .history-page .history-table tr {
+        display: block;
+        margin-bottom: 15px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+    }
+
+    .history-page .history-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: none;
+    }
+
+    .history-page .history-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #495057;
+        flex-basis: 40%;
+    }
+
+    .history-page .history-table td:last-child {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+}

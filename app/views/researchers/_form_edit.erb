@@ -1,0 +1,85 @@
+<% if researcher.errors.any? %>
+  <div class="alert alert-danger">
+    <p><strong><i class="bi bi-exclamation-circle"></i> Verifique os erros abaixo:</strong></p>
+    <ul class="mb-0">
+      <% researcher.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: researcher, local: true, class: "form-horizontal confirm-save", data: { turbo: false } do |f| %>
+  <h4 class="section-title mb-4">Dados pessoais</h4>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :name, required_label(:name, 'researcher'), class: "form-label" %>
+      <%= f.text_field :name, class: "form-control form-control-sm" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.label :phone_number, required_label(:phone_number, 'researcher'), class: "form-label" %>
+      <%= f.text_field :phone_number, class: "form-control form-control-sm", maxlength: 15, data: { mask: "phone" } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :academic_field, required_label(:academic_field, 'researcher'), class: "form-label" %>
+      <%= f.text_field :academic_field, class: "form-control form-control-sm" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.label :cv_link, required_label(:cv_link, 'researcher'), class: "form-label" %>
+      <%= f.text_field :cv_link, class: "form-control form-control-sm" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :orcid_id, required_label(:orcid_id, 'researcher'), class: "form-label" %>
+      <%= f.text_field :orcid_id, class: "form-control form-control-sm" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.label :academic_title, required_label(:academic_title, 'researcher'), class: "form-label" %>
+      <%= f.text_field :academic_title, class: "form-control form-control-sm" %>
+    </div>
+  </div>
+
+  <h4 class="section-title mt-5 mb-4">Endereço</h4>
+  <%= f.fields_for :address do |address_fields| %>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <%= address_fields.label :postal_code, required_label(:postal_code, 'address'), class: "form-label" %>
+        <%= address_fields.text_field :postal_code, class: "form-control form-control-sm", data: { mask: "postal_code", autocomplete: "cep", scope: "researcher[address_attributes]" } %>
+      </div>
+      <div class="col-md-8 mb-3">
+        <%= address_fields.label :street, required_label(:street, 'address'), class: "form-label" %>
+        <%= address_fields.text_field :street, class: "form-control form-control-sm", data: { field: "street" } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= address_fields.label :district, required_label(:district, 'address'), class: "form-label" %>
+        <%= address_fields.text_field :district, class: "form-control form-control-sm", data: { field: "district" } %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= address_fields.label :complement, class: "form-label" %>
+        <%= address_fields.text_field :complement, class: "form-control form-control-sm" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= address_fields.label :city, required_label(:city, 'address'), class: "form-label" %>
+        <%= address_fields.text_field :city, class: "form-control form-control-sm", data: { field: "city" } %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= address_fields.label :state, required_label(:state, 'address'), class: "form-label" %>
+        <%= address_fields.text_field :state, class: "form-control form-control-sm", data: { field: "state" } %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="d-flex justify-content-start gap-2 mt-4">
+    <%= link_to researcher_path(researcher), class: "btn btn-sm btn-secondary custom-btn" do %>
+      <i class="bi bi-arrow-left"></i> Voltar
+    <% end %>
+    <%= f.submit 'Salvar alterações', class: "btn btn-sm btn-success custom-btn" %>
+  </div>
+<% end %>

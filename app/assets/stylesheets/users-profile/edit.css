@@ -1,0 +1,21 @@
+/* Estilo geral para a página de edição de perfil */
+.edit-profile-container {
+    font-size: 0.9rem;
+}
+
+/* Campos do formulário */
+.edit-profile-container .form-label {
+    font-weight: bold;
+    color: #495057; /* Cinza intermediário */
+}
+
+.edit-profile-container .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-profile-container .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 1px rgba(0, 123, 255, 0.5);
+}
