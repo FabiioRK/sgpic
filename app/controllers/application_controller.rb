@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   helper_method :search_path_for_role, :profile_path_for_role
 
   rescue_from ActionController::RoutingError, with: :render_not_found
+  rescue_from Warden::NotAuthenticated, with: :render_not_found
 
   def render_not_found
     render "errors/not_found", status: :not_found

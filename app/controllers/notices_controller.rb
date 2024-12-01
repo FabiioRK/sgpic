@@ -2,7 +2,7 @@ class NoticesController < ApplicationController
   before_action :authorize_access
 
   def index
-    @notices = filtered_notices.page(params[:page]).per(10)
+    @notices = filtered_notices.page(params[:page]).per(5)
   end
 
   def show
@@ -45,7 +45,7 @@ class NoticesController < ApplicationController
         )
       end
 
-      render json: { success: true, redirect_url: notices_path, message: 'Edital atualizado com sucesso.' }
+      render json: { success: true, redirect_url: notice_path(@notice), message: 'Edital atualizado com sucesso.' }
       return
     end
 
@@ -83,7 +83,7 @@ class NoticesController < ApplicationController
 
   def history
     @notice = Notice.find(params[:id])
-    @histories = @notice.notice_histories.order(edited_at: :desc).page(params[:page]).per(10)
+    @histories = @notice.notice_histories.order(edited_at: :desc).page(params[:page]).per(5)
   end
 
   private

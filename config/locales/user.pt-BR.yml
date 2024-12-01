@@ -1,0 +1,11 @@
+pt-BR:
+  activerecord:
+    attributes:
+      user:
+        role: "Cargo" # Tradução genérica para o atributo "role"
+    enums:
+      user:
+        role:
+          supervisor: "Supervisor"
+          coordinator: "Coordenador"
+          researcher: "Pesquisador"

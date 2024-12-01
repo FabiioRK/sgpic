@@ -88,6 +88,13 @@ class ProjectsController < ApplicationController
       @project.attachments.attach(params[:project][:attachments])
     end
 
+    if project_params[:annotation].blank?
+      @annotation_history = AnnotationHistory.where(project: @project).order(created_at: :desc)
+      @project.errors.add(:base, 'Anotação é obrigatório ao atualizar o projeto.')
+      render partial: 'form_edit', locals: { project: @project, researcher: @researcher, annotation_history: @annotation_history }, status: :unprocessable_entity
+      return
+    end
+
     if @project.update(update_params.except(:attachments))
       if params[:pending_button] || params[:update_button]
         AnnotationHistory.create!(
@@ -109,7 +116,7 @@ class ProjectsController < ApplicationController
 
     @annotation_history = AnnotationHistory.where(project: @project).order(created_at: :desc)
     flash.now.alert = 'Não foi possível atualizar o projeto.'
-    render partial: 'form_edit', locals: { researcher: @researcher, annoation_history: @annotation_history }, status: :unprocessable_entity
+    render partial: 'form_edit', locals: { project: @project, researcher: @researcher, annotation_history: @annotation_history }, status: :unprocessable_entity
   end
 
   def search

@@ -29,10 +29,36 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 RSpec.configure do |config|
   config.before(type: :system) do
     driven_by(:rack_test)
   end
+
+  config.before(:suite) do
+    ActiveRecord::Base.connection_pool.disconnect!
+    DatabaseCleaner.clean_with(:deletion)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  config.include FactoryBot::Syntax::Methods
+
+  config.filter_run_excluding skip: true
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

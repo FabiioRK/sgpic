@@ -15,6 +15,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :researcher
   has_many :notifications, dependent: :destroy
 
+  validates :role, presence: true
   after_create :create_supervisor
 
   def display_name
@@ -29,7 +30,7 @@ class User < ApplicationRecord
   def create_supervisor
     case role.to_sym
     when :supervisor
-      create_supervisor!
+      create_supervisor!(name: "Supervisor Teste")
     end
   end
 

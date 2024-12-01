@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   belongs_to :researcher
   belongs_to :coordinator
+  belongs_to :notice
   has_one :student
   accepts_nested_attributes_for :student
   has_many :annotation_histories, dependent: :destroy
@@ -23,7 +24,7 @@ class Project < ApplicationRecord
   validates :project_type, :institution, :course, :study_area, :research_line, :ods,
             :project_title, :project_summary, :key_words, presence: true
   validates :ric_number, presence: true, uniqueness: true, numericality: { only_integer: true }
-  before_validation :generate_ric_number, :verify_date, on: :create
+  before_validation :generate_ric_number, on: :create
   validate :acceptable_attachment
   after_save :create_notifications, if: :saved_change_to_project_status?
   after_create :notify_new_project
@@ -61,14 +62,6 @@ class Project < ApplicationRecord
         self.ric_number = ric
         break
       end
-    end
-  end
-
-  def verify_date
-    unless Notice.where.not(id: id).any? do |existed_notice|
-      (DateTime.now..DateTime.now).overlaps?(existed_notice.start_date..existed_notice.end_date)
-    end
-      errors.add(:base, "Não existe um edital criado no momento.")
     end
   end
 

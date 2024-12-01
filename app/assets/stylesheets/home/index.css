@@ -1,134 +1,97 @@
-/* Container principal */
 .welcome-container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 20px 15px;
+    text-align: justify;
+}
+
+.cute-container-desktop {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
 
-/* Cabeçalho */
-.welcome-header {
-    background: #5a6268;
-    color: #fff;
-    padding: 30px 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    text-align: center;
+@media (max-width: 768px) {
+    .cute-container-desktop {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        background: none;
+    }
 }
 
 .welcome-title {
     font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.welcome-subtitle {
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin: 0;
-}
-
-/* Seções */
-.welcome-section {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    font-weight: bold;
+    color: #0d4218;
+    text-align: center;
     margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: justify;
-    width: 100%; /* Garante largura total no mobile */
 }
 
-.welcome-section p {
+.welcome-description {
     font-size: 1rem;
-    line-height: 1.6;
     margin-bottom: 15px;
+    color: #495057;
 }
 
-.welcome-section ul {
+.welcome-list {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin-bottom: 20px;
 }
 
-.welcome-section ul li {
+.welcome-list li {
     font-size: 1rem;
     margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #0d4218;
+    color: #333;
 }
 
-.welcome-section ul li i {
-    color: #28a745;
+.welcome-list li i {
     font-size: 1.2rem;
+    color: #28a745;
 }
 
 /* Contato */
-.welcome-contact {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    width: 100%; /* Garante largura total no mobile */
-}
-
-.contact-title {
-    font-size: 1.5rem;
-    color: #0d4218;
-    margin-bottom: 15px;
-}
-
-.welcome-contact ul {
-    list-style: none;
-    padding: 0;
-}
-
-.welcome-contact ul li {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.welcome-contact ul li i {
-    color: #28a745;
-    font-size: 1.2rem;
-}
-
-/* Links */
-a {
+.welcome-contact a {
     color: #007bff;
     text-decoration: none;
 }
 
-a:hover {
+.welcome-contact a:hover {
     text-decoration: underline;
 }
 
-/* Responsividade */
+/* Rodapé */
+.welcome-footer {
+    font-size: 1rem;
+    color: #495057;
+    margin-top: 20px;
+}
+
 @media (max-width: 768px) {
     .welcome-container {
-        padding: 10px; /* Reduz o espaçamento lateral no mobile */
-    }
-
-    .welcome-header {
-        padding: 20px 10px;
+        padding: 15px;
     }
 
     .welcome-title {
         font-size: 1.8rem;
     }
 
-    .welcome-section {
-        padding: 15px;
-        margin-bottom: 15px; /* Reduz o espaçamento entre os cards */
+    .welcome-description {
+        font-size: 0.95rem;
     }
 
-    .contact-title {
-        font-size: 1.3rem;
+    .welcome-list li {
+        font-size: 0.9rem;
+    }
+
+    .welcome-footer {
+        font-size: 0.9rem;
     }
 }
 
@@ -137,23 +100,19 @@ a:hover {
         font-size: 1.5rem;
     }
 
-    .welcome-subtitle {
-        font-size: 1rem;
-    }
-
-    .welcome-section p {
+    .welcome-description {
         font-size: 0.9rem;
     }
 
-    .contact-title {
-        font-size: 1.2rem;
+    .welcome-list {
+        padding-left: 0;
     }
 
-    .welcome-section {
-        padding: 15px;
+    .welcome-list li {
+        font-size: 0.85rem;
     }
 
-    .welcome-contact {
-        padding: 15px;
+    .welcome-footer {
+        font-size: 0.85rem;
     }
 }

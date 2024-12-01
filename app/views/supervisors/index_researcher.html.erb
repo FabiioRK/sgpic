@@ -42,6 +42,10 @@
     </tbody>
   </table>
 
+  <div class="pagination">
+    <%= paginate @researchers, window: 2 %>
+  </div>
+
   <div class="text-start mt-4">
     <%= link_to root_path, class: "btn btn-secondary btn-sm custom-btn" do %>
       <i class="bi bi-arrow-left"></i> Voltar

@@ -14,7 +14,7 @@
       <% @histories.each do |history| %>
         <tr>
           <td data-label="Usuário">
-            <%= I18n.t("activerecord.attributes.user.role.#{history.user.role}") %> - <%= history.user.display_name %>
+            <%= I18n.t("activerecord.enums.user.role.#{history.user.role}") %> - <%= history.user.display_name %>
           </td>
           <td data-label="Data e Horário"><%= l(history.edited_at, format: :long) %></td>
           <td data-label="Ações" class="text-center">

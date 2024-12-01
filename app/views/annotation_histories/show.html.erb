@@ -14,7 +14,7 @@
             <% @annotation_history.each do |history| %>
               <div class="annotation-item mb-3">
                 <p class="annotation-meta mb-1">
-                  <strong><%= history.created_at.strftime("%d/%m/%Y %H:%M") %></strong> - <%= I18n.t("activerecord.attributes.user.role.#{history.user.role}") %> <%= history.user.display_name %>
+                  <strong><%= history.created_at.strftime("%d/%m/%Y %H:%M") %></strong> - <%= I18n.t("activerecord.enums.user.role.#{history.user.role}") %> <%= history.user.display_name %>
                 </p>
                 <p class="annotation-text mb-0 text-muted"><%= history.annotation %></p>
               </div>

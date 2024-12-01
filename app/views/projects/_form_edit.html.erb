@@ -1,3 +1,14 @@
+<% if project.errors.any? %>
+  <div class="alert alert-danger">
+    <h4 class="alert-heading"><i class="bi bi-exclamation-circle me-2"></i>Erro(s) ao salvar:</h4>
+    <ul class="mb-0">
+      <% project.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_with model: [current_user.role == 'coordinator' ? @coordinator : @researcher, project], method: :patch, class: 'mb-5 confirm-save', data: { turbo: false }  do |form| %>
   <div class="mb-4">
     <%= form.label :annotation, required_label(:annotation, 'annotation_history'), class: 'form-label-project' %>
