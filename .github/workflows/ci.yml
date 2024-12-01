@@ -35,7 +35,10 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y nodejs postgresql-client
 
       - name: Install Bundler
-        run: gem install bundler
+        run: gem install bundler --user-install
+
+      - name: Configure PATH for Bundler
+        run: echo "::add-path::$HOME/.local/bin" >> $GITHUB_ENV
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -45,7 +48,6 @@ jobs:
 
       - name: Install gems
         run: |
-          gem install bundler
           bundle install --jobs=4 --retry=3
 
       - name: Prepare database
