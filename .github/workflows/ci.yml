@@ -1,4 +1,4 @@
-name: Rails CI
+name: CI
 
 on:
   push:
@@ -15,12 +15,12 @@ jobs:
     services:
       db:
         image: postgres:14
-        env:
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: sgpic_test
         ports:
           - 5432:5432
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_USER: user
+          POSTGRES_DB: sgpic_test
         options: >-
           --health-cmd="pg_isready -U user -d sgpic_test"
           --health-interval=10s
@@ -35,36 +35,21 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
-          bundler-cache: true
 
-      - name: Install postgres client dependencies
-        run: sudo apt-get update && sudo apt-get install -y libpq-dev postgresql-client
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Yarn package cache
-        uses: actions/cache@v2
-        with:
-          path: ./node_modules
-          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('./yarn.lock') }}
-
-      - name: Install Yarn packages
-        run: yarn install --pure-lockfile
-
-      - name: Wait for PostgreSQL
+      - name: Install dependencies
         run: |
-          until pg_isready -h db -U user; do
-            echo "Waiting for PostgreSQL..."
-            sleep 1
-          done
+          gem install bundler:2.4.21
+          bundle install --jobs=4 --retry=3
 
-      - name: Create database
+      - name: Set up database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: "postgresql://user:password@localhost:5432/sgpic_test"
         run: |
-          bundle exec rails db:create
-          bundle exec rails db:migrate
+          bin/rails db:create db:schema:load
 
       - name: Run tests
-        run: bundle exec rspec spec
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: "postgresql://user:password@localhost:5432/sgpic_test"
+        run: bundle exec rspec
