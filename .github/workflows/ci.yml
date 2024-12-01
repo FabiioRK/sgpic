@@ -31,31 +31,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup system dependencies
-        run: sudo apt-get update && sudo apt-get install -y tar gzip xz-utils nodejs postgresql-client
-
-      - name: Install Bundler
-        run: gem install bundler --user-install
-
-      - name: Configure PATH for Bundler
-        run: echo "PATH=$HOME/.local/share/gem/ruby/3.0.0/bin:\$PATH" >> $GITHUB_ENV
-
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
-          bundler-cache: true
+            ruby-version: 3.2.2
+            bundler-cache: true
 
-      - name: Install gems
-        run: |
-          bundle install --jobs=4 --retry=3
+      - name: Install postgres client dependencies
+        run: sudo apt-get install libpq-dev
 
-      - name: Prepare database
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Yarn package cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('./yarn.lock') }}
+
+      - name: Install Yarn packages
+        run: yarn install --pure-lockfile
+
+      - name: Create database
         run: |
-          cp config/database.yml config/database.yml.ci
-          sed -i 's/sgpic_development/sgpic_test/g' config/database.yml.ci
-          RAILS_ENV=test rails db:create db:schema:load
+          bundle exec rails db:create
+          bundle exec rails db:migrate
 
       - name: Run tests
-        run: |
-          RAILS_ENV=test bundle exec rspec
+        run: bundle exec rspec spec
