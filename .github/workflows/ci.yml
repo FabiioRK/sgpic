@@ -34,11 +34,11 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-            ruby-version: 3.2.2
-            bundler-cache: true
+          ruby-version: 3.2.2
+          bundler-cache: true
 
       - name: Install postgres client dependencies
-        run: sudo apt-get install libpq-dev
+        run: sudo apt-get update && sudo apt-get install -y libpq-dev
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -53,6 +53,13 @@ jobs:
 
       - name: Install Yarn packages
         run: yarn install --pure-lockfile
+
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready -h db -U user; do
+            echo "Waiting for PostgreSQL..."
+            sleep 1
+          done
 
       - name: Create database
         run: |
