@@ -1,23 +1,17 @@
-# Usar imagem base do Ruby
 FROM ruby:3.2.2
 
-# Instalar dependências do sistema
-RUN apt-get update -qq && apt-get install -y nodejs sqlite3
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client build-essential
 
-# Configurar diretório de trabalho
-WORKDIR /app
+WORKDIR /sgpic
 
-# Copiar o Gemfile e o Gemfile.lock
-COPY Gemfile* ./
+COPY Gemfile Gemfile.lock ./
 
-# Instalar as gems necessárias
-RUN bundle install
+RUN gem install bundler:2.4.21
 
-# Copiar o restante da aplicação
+RUN bundle install --jobs=4 --retry=3
+
 COPY . .
 
-# Expor a porta onde o Rails rodará
 EXPOSE 3000
 
-# Comando para rodar a aplicação
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"]

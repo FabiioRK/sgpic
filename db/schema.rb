@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_01_035705) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,12 +49,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
     t.string "postal_code"
     t.string "city"
     t.string "state"
-    t.integer "supervisor_id"
-    t.integer "coordinator_id"
-    t.integer "researcher_id"
+    t.bigint "supervisor_id"
+    t.bigint "coordinator_id"
+    t.bigint "researcher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "student_id"
+    t.bigint "student_id"
     t.index ["coordinator_id"], name: "index_addresses_on_coordinator_id"
     t.index ["researcher_id"], name: "index_addresses_on_researcher_id"
     t.index ["student_id"], name: "index_addresses_on_student_id"
@@ -60,7 +63,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
 
   create_table "annotation_histories", force: :cascade do |t|
     t.text "annotation"
-    t.integer "project_id", null: false
+    t.bigint "project_id", null: false
     t.integer "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -71,14 +74,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
     t.string "name"
     t.string "phone_number"
     t.string "academic_field"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_coordinators_on_user_id"
   end
 
   create_table "notice_histories", force: :cascade do |t|
-    t.integer "notice_id", null: false
+    t.bigint "notice_id", null: false
     t.integer "edited_by", null: false
     t.json "changes_made", null: false
     t.datetime "edited_at", null: false
@@ -99,8 +102,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "project_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
     t.string "message"
     t.boolean "read", default: false, null: false
     t.datetime "created_at", null: false
@@ -110,7 +113,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.integer "ric_number"
+    t.bigint "ric_number"
     t.integer "project_type"
     t.string "institution"
     t.string "course"
@@ -123,11 +126,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
     t.integer "project_status", default: 0
     t.text "annotation", default: ""
     t.datetime "feedback_date"
-    t.integer "researcher_id", null: false
-    t.integer "coordinator_id", null: false
+    t.bigint "researcher_id", null: false
+    t.bigint "coordinator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "notice_id", null: false
+    t.bigint "notice_id", null: false
     t.index ["coordinator_id"], name: "index_projects_on_coordinator_id"
     t.index ["notice_id"], name: "index_projects_on_notice_id"
     t.index ["researcher_id"], name: "index_projects_on_researcher_id"
@@ -141,7 +144,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
     t.string "cv_link"
     t.string "orcid_id"
     t.string "academic_title"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_researchers_on_user_id"
@@ -159,7 +162,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
     t.integer "semester"
     t.boolean "has_subject_dependencies"
     t.boolean "is_regular_student"
-    t.integer "project_id", null: false
+    t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_students_on_project_id"
@@ -167,7 +170,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_29_223229) do
 
   create_table "supervisors", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_supervisors_on_user_id"

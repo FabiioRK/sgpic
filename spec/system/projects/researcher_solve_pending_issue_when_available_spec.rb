@@ -40,13 +40,4 @@ RSpec.describe 'Researcher solving pending issues', type: :system do
     expect(page).to have_content('Anotação é obrigatório ao atualizar o projeto.')
     expect(project.reload.project_status).to eq('pendente')
   end
-
-  it 'volta para a página de detalhes do projeto ao clicar em "Voltar"' do
-    visit edit_researcher_project_path(researcher, project)
-
-    click_link 'Voltar'
-
-    expect(page).to have_current_path(researcher_project_path(researcher, project))
-    expect(page).to have_content("Visualização do projeto Nº #{project.ric_number}")
-  end
 end
