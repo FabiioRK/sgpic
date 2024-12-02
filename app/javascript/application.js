@@ -4,8 +4,8 @@ import "bootstrap";
 import Rails from "@rails/ujs";
 Rails.start();
 import { togglePasswordVisibility } from "utils/passwordToggle";
-import "./utils/masks"
-import "./utils/fetchAddress"
+import "utils/masks"
+import "utils/fetchAddress"
 import "utils/sweetalert_confirm"
 import "utils/sweetalert_confirm_delete"
 import "utils/sweetalert_confirm_save"

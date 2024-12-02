@@ -4,7 +4,7 @@ default: &default
   pool: 5
   username: user
   password: password
-  host: db
+  host: localhost
 
 development:
   <<: *default
@@ -15,7 +15,12 @@ test:
   database: sgpic_test
 
 production:
-  <<: *default
+#  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
   database: sgpic_production
   username: sgpic
-  password: <%= ENV['SGPIC_DATABASE_PASSWORD'] %>
+  password: Senhasgpic123#
+  host: localhost
+  port: 5432

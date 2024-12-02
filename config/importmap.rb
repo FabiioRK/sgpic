@@ -16,3 +16,5 @@ pin "@popperjs/core", to: "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/di
 pin "bootstrap", to: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 pin "vanilla-masker" # @1.2.0
 pin "sweetalert2" # @11.14.5
+
+
