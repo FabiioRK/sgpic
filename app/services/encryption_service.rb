@@ -14,7 +14,10 @@ class EncryptionService
   private
 
   def self.encryptor
-    key = Base64.decode64(Rails.application.credentials[:encryption_key])
+    key_base = ENV['ENCRYPTION_KEY'] || Rails.application.credentials[:encryption_key]
+    raise 'Encryption key not set.' unless key_base
+
+    key = Base64.decode64(key_base)
     ActiveSupport::MessageEncryptor.new(key)
   end
 end

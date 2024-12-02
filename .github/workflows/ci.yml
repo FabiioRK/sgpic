@@ -12,6 +12,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgresql://user:password@localhost:5432/sgpic_test"
+      ENCRYPTION_KEY: ojfQdKH7AkwoQDmUCDsGvnV0riP+5NXS6oCBxBqiwCY=
+
     services:
       db:
         image: postgres:14
@@ -39,17 +44,12 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler:2.4.21
-          bundle install --jobs=4 --retry=3
+          bundle check || bundle install --jobs=4 --retry=3
 
       - name: Set up database
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: "postgresql://user:password@localhost:5432/sgpic_test"
         run: |
+          bin/rails db:drop || true
           bin/rails db:create db:schema:load
 
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: "postgresql://user:password@localhost:5432/sgpic_test"
-        run: bundle exec rspec
+        run: bundle exec rspec --format documentation
