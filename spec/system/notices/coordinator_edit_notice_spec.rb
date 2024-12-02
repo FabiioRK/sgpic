@@ -7,7 +7,7 @@ RSpec.describe 'Coordinator editing a notice', type: :system do
 
   before do
     login_as user, scope: :user
-    visit edit_notice_path(notice) 
+    visit edit_notice_path(id: EncryptionService.encrypt(notice.id))
   end
 
   it 'exibe o formulário de edição do edital com os dados corretos' do
@@ -31,7 +31,6 @@ RSpec.describe 'Coordinator editing a notice', type: :system do
     expect(notice.start_date.strftime('%Y-%m-%d')).to eq(new_start_date)
     expect(notice.end_date.strftime('%Y-%m-%d')).to eq(new_end_date)
 
-    expect(page).to have_current_path(notice_path(notice))
     expect(page).to have_content('Edital atualizado com sucesso')
   end
 

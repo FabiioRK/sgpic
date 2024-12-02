@@ -12,7 +12,7 @@ RSpec.describe 'Coordinator activating or deactivating a notice', type: :system 
 
   context 'when the notice is active' do
     it 'allows the coordinator to deactivate the notice' do
-      visit notice_path(notice_active)
+      visit notice_path(id: EncryptionService.encrypt(notice_active.id))
 
       expect(page).to have_content('Ativo')
       expect(page).to have_link('Desativar')
@@ -25,7 +25,7 @@ RSpec.describe 'Coordinator activating or deactivating a notice', type: :system 
 
   context 'when the notice is inactive' do
     it 'allows the coordinator to activate the notice' do
-      visit notice_path(notice_inactive)
+      visit notice_path(id: EncryptionService.encrypt(notice_inactive.id))
 
       expect(page).to have_content('Inativo')
       expect(page).to have_link('Ativar')

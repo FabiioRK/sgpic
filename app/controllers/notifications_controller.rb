@@ -7,9 +7,14 @@ class NotificationsController < ApplicationController
   end
 
   def mark_as_read
-    notification = current_user.notifications.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    notification = current_user.notifications.find(decrypted_id)
     notification.mark_as_read!
     redirect_to notifications_path, notice: "Notificação marcada como lida."
+  rescue ActiveRecord::RecordNotFound
+    redirect_to notifications_path, alert: "Notificação não encontrada."
+  rescue ActiveSupport::MessageEncryptor::InvalidMessage
+    redirect_to notifications_path, alert: "ID inválido ou corrompido."
   end
 
   def mark_all_as_read

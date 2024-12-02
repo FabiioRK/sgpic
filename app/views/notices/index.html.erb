@@ -40,30 +40,30 @@
           </div>
 
           <div class="d-flex align-items-center">
-            <%= link_to notice_path(notice), class: "btn btn-info btn-sm me-2 custom-btn" do %>
+            <%= link_to notice_path(id: EncryptionService.encrypt(notice.id)), class: "btn btn-info btn-sm me-2 custom-btn" do %>
               <i class="bi bi-eye"></i> Ver Detalhes
             <% end %>
 
             <% if user_signed_in? && (current_user.coordinator? || current_user.supervisor?) %>
-              <%= link_to edit_notice_path(notice), class: "btn btn-warning btn-sm me-2 custom-btn" do %>
+              <%= link_to edit_notice_path(id: EncryptionService.encrypt(notice.id)), class: "btn btn-warning btn-sm me-2 custom-btn" do %>
                 <i class="bi bi-pencil"></i> Editar
               <% end %>
 
               <% if notice.active? %>
-                <%= link_to toggle_active_notice_path(notice),
+                <%= link_to toggle_active_notice_path(id: EncryptionService.encrypt(notice.id)),
                             class: "btn btn-danger btn-sm me-2 custom-btn confirm-post",
                             data: { sweet_confirm: "Tem certeza que deseja desativar o edital '#{notice.name}' ?", method: :patch } do %>
                   <i class="bi bi-x-circle"></i> Desativar
                 <% end %>
               <% else %>
-                <%= link_to toggle_active_notice_path(notice),
+                <%= link_to toggle_active_notice_path(id: EncryptionService.encrypt(notice.id)),
                             class: "btn btn-success btn-sm me-2 custom-btn confirm-post",
                             data: { sweet_confirm: "Tem certeza que deseja ativar o edital '#{notice.name}' ?", method: :patch } do %>
                   <i class="bi bi-check-circle"></i> Ativar
                 <% end %>
               <% end %>
 
-              <%= link_to notice_path(notice),
+              <%= link_to notice_path(id: EncryptionService.encrypt(notice.id)),
                           method: :delete,
                           data: { sweet_confirm: "Você está prestes a excluir o edital '#{notice.name}'. Tem certeza disso?" },
                           class: "btn btn-dark btn-sm custom-btn delete-post" do %>

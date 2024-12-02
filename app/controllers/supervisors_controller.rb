@@ -36,7 +36,8 @@ class SupervisorsController < ApplicationController
   end
 
   def show_project
-    @project = Project.find(params[:id])
+    project_id = EncryptionService.decrypt(params[:id])
+    @project = Project.find(project_id)
 
     render :template => "projects/show"
   end

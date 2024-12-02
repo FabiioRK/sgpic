@@ -8,7 +8,7 @@ class ResearchersController < ApplicationController
 
   def update
     if @researcher.update(researcher_params)
-      render json: { success: true, redirect_url: researcher_path, message: 'Perfil atualizado com sucesso.' }
+      render json: { success: true, redirect_url: researcher_path(id: EncryptionService.encrypt(@researcher.id)), message: 'Perfil atualizado com sucesso.' }
       return
     end
 
@@ -44,9 +44,13 @@ class ResearchersController < ApplicationController
 
   def set_researcher
     begin
-      @researcher = Researcher.find(params[:id])
+      decrypted_id = EncryptionService.decrypt(params[:id])
+      @researcher = Researcher.find(decrypted_id)
     rescue ActiveRecord::RecordNotFound
       @researcher = nil
+      redirect_to root_path, alert: 'Pesquisador não encontrado'
+    rescue ActiveSupport::MessageEncryptor::InvalidMessage
+      redirect_to root_path, alert: 'ID inválido ou corrompido'
     end
   end
 end

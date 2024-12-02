@@ -43,7 +43,9 @@ RSpec.describe 'Supervisor visualizando pesquisadores', type: :system do
     it 'permite visualizar um pesquisador' do
       visit researchers_path
 
-      click_link 'Visualizar', href: researcher_path(researcher1)
+      within("tr[data-researcher-id='#{researcher1.id}']") do
+        click_link 'Visualizar'
+      end
 
       expect(page).to have_content(researcher1.name)
       expect(page).to have_content(researcher1.user.email)

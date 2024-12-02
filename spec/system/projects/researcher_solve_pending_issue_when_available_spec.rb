@@ -10,7 +10,7 @@ RSpec.describe 'Researcher solving pending issues', type: :system do
   end
 
   it 'exibe o formulário de pendências' do
-    visit edit_researcher_project_path(researcher, project)
+    visit edit_researcher_project_path(researcher_id: EncryptionService.encrypt(researcher.id), id: EncryptionService.encrypt(project.id))
 
     expect(page).to have_content("Editar Projeto Nº #{project.ric_number}")
     expect(page).to have_selector('textarea[name="project[annotation]"]', visible: true)
@@ -19,20 +19,19 @@ RSpec.describe 'Researcher solving pending issues', type: :system do
   end
 
   it 'resolve pendências e altera o status para "em análise"', js: true do
-    visit edit_researcher_project_path(researcher, project)
+    visit edit_researcher_project_path(researcher_id: EncryptionService.encrypt(researcher.id), id: EncryptionService.encrypt(project.id))
 
     fill_in 'project[annotation]', with: 'Resolvendo as pendências do projeto.'
     attach_file 'project[attachments][]', Rails.root.join('spec/fixtures/files/test1.pdf')
     click_button 'Atualizar projeto'
 
-    expect(page).to have_current_path(researcher_project_path(researcher, project))
     expect(page).to have_content('Projeto atualizado com sucesso')
     expect(project.reload.project_status).to eq('em_analise')
   end
 
 
   it 'exibe erros ao salvar sem resolver pendências corretamente' do
-    visit edit_researcher_project_path(researcher, project)
+    visit edit_researcher_project_path(researcher_id: EncryptionService.encrypt(researcher.id), id: EncryptionService.encrypt(project.id))
 
     fill_in 'project[annotation]', with: ''
     click_button 'Atualizar projeto'

@@ -63,7 +63,7 @@
   <% end %>
 
   <div class="d-flex justify-content-start gap-2 mt-4">
-    <%= link_to coordinator_path(coordinator), class: "btn btn-sm btn-secondary custom-btn" do %>
+    <%= link_to coordinator_path(id: EncryptionService.encrypt(coordinator.id)), class: "btn btn-sm btn-secondary custom-btn" do %>
       <i class="bi bi-arrow-left"></i> Voltar
     <% end %>
     <%= f.submit 'Salvar alterações', class: "btn btn-sm btn-success custom-btn" %>

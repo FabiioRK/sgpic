@@ -53,7 +53,7 @@ RSpec.describe 'Researcher viewing notices', type: :system do
     it 'não exibe opções de edição, exclusão ou alteração de status no detalhe do edital' do
       notice = active_notices.first
 
-      visit notice_path(notice)
+      visit notice_path(id: EncryptionService.encrypt(notice.id))
 
       expect(page).not_to have_link('Editar')
       expect(page).not_to have_link('Excluir')

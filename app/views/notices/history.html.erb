@@ -18,7 +18,10 @@
           </td>
           <td data-label="Data e Horário"><%= l(history.edited_at, format: :long) %></td>
           <td data-label="Ações" class="text-center">
-            <%= link_to notice_history_path(@notice, history), class: 'custom-btn btn btn-info btn-sm' do %>
+            <%= link_to notice_history_path(
+                          notice_id: EncryptionService.encrypt(@notice.id),
+                          id: EncryptionService.encrypt(history.id)
+                        ), class: 'custom-btn btn btn-info btn-sm' do %>
               <i class="bi bi-eye"></i> Ver detalhes
             <% end %>
           </td>
@@ -32,7 +35,7 @@
   </div>
 
   <div class="d-flex justify-content-start mt-4">
-    <%= link_to notice_path(@notice), class: 'custom-btn btn btn-secondary btn-sm' do %>
+    <%= link_to notice_path(id: EncryptionService.encrypt(@notice.id)), class: 'custom-btn btn btn-secondary btn-sm' do %>
       <i class="bi bi-arrow-left"></i> Voltar
     <% end %>
   </div>

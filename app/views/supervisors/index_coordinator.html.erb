@@ -12,7 +12,7 @@
     </thead>
     <tbody>
     <% @coordinators.each do |coordinator| %>
-      <tr>
+      <tr data-coordinator-id="<%= coordinator.id %>">
         <td data-label="Nome"><%= coordinator.name %></td>
         <td data-label="E-mail"><%= coordinator.user.email %></td>
         <td>
@@ -24,11 +24,11 @@
         </td>
         <td data-label="Ações" class="text-center">
           <div class="action-buttons d-flex justify-content-center gap-2">
-            <%= link_to coordinator_path(coordinator), class: "btn btn-info btn-sm custom-btn" do %>
+            <%= link_to coordinator_path(id: EncryptionService.encrypt(coordinator.id)), class: "btn btn-info btn-sm custom-btn" do %>
               <i class="bi bi-eye"></i> Visualizar
             <% end %>
 
-            <%= link_to coordinator.user.active? ? deactivate_coordinator_path(coordinator) : activate_coordinator_path(coordinator),
+            <%= link_to coordinator.user.active? ? deactivate_coordinator_path(id: EncryptionService.encrypt(coordinator.id)) : activate_coordinator_path(id: EncryptionService.encrypt(coordinator.id)),
                         method: :patch,
                         class: coordinator.user.active? ? 'btn btn-danger btn-sm custom-btn confirm-post' : 'btn btn-success btn-sm custom-btn confirm-post',
                         data: { sweet_confirm: "Tem certeza que deseja #{coordinator.user.active? ? 'desativar' : 'ativar'} este coordenador?" } do %>

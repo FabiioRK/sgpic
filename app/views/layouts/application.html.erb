@@ -95,7 +95,7 @@
             </li>
 
             <li class="sidebar-item">
-              <a href="<%= supervisor_projects_path(current_user.supervisor) %>" class="sidebar-link">
+              <a href="<%= supervisor_projects_path %>" class="sidebar-link">
                 <i class="lni lni-files"></i>
                 <span>Visualizar projetos</span>
               </a>
@@ -155,7 +155,7 @@
                   <%= link_to 'Cadastrar novo projeto', new_researcher_project_path(current_user.researcher), class: "sidebar-link" %>
                 </li>
                 <li class="sidebar-item">
-                  <%= link_to 'Visualizar projetos', researcher_projects_path(current_user.researcher), class: "sidebar-link" %>
+                  <%= link_to 'Visualizar projetos', researcher_projects_path(researcher_id: EncryptionService.encrypt(current_user.researcher.id)), class: "sidebar-link" %>
                 </li>
               </ul>
             </li>

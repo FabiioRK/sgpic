@@ -44,28 +44,32 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def activate_coordinator
-    coordinator = Coordinator.find(params[:id])
+    coordinator_id = EncryptionService.decrypt(params[:id])
+    coordinator = Coordinator.find(coordinator_id)
     coordinator.user.update(active: true)
 
     render json: { success: true, message: 'Coordenador ativado com sucesso.' }
   end
 
   def deactivate_coordinator
-    coordinator = Coordinator.find(params[:id])
+    coordinator_id = EncryptionService.decrypt(params[:id])
+    coordinator = Coordinator.find(coordinator_id)
     coordinator.user.update(active: false)
 
     render json: { success: true, message: 'Coordenador desativado com sucesso.' }
   end
 
   def activate_researcher
-    researcher = Researcher.find(params[:id])
+    researcher_id = EncryptionService.decrypt(params[:id])
+    researcher = Researcher.find(researcher_id)
     researcher.user.update(active: true)
 
     render json: { success: true, message: 'Pesquisador ativado com sucesso.' }
   end
 
   def deactivate_researcher
-    researcher = Researcher.find(params[:id])
+    researcher_id = EncryptionService.decrypt(params[:id])
+    researcher = Researcher.find(researcher_id)
     researcher.user.update(active: false)
 
     render json: { success: true, message: 'Pesquisador desativado com sucesso.' }

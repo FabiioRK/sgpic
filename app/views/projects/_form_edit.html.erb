@@ -9,7 +9,7 @@
   </div>
 <% end %>
 
-<%= form_with model: [current_user.role == 'coordinator' ? @coordinator : @researcher, project], method: :patch, class: 'mb-5 confirm-save', data: { turbo: false }  do |form| %>
+<%= form_with model: @project, url: current_user.role == 'coordinator' ? coordinator_project_path(coordinator_id: EncryptionService.encrypt(@coordinator.id), id: EncryptionService.encrypt(@project.id)) : researcher_project_path(researcher_id: EncryptionService.encrypt(@researcher.id), id: EncryptionService.encrypt(@project.id)), method: :patch, class: 'mb-5 confirm-save', data: { turbo: false } do |form| %>
   <div class="mb-4">
     <%= form.label :annotation, required_label(:annotation, 'annotation_history'), class: 'form-label-project' %>
     <%= form.text_area :annotation, class: 'form-control shadow-sm', required: true, placeholder: "Escreva aqui uma anotação ou avaliação final sobre o projeto.", rows: 5 %>
@@ -26,7 +26,7 @@
   </div>
 
   <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-    <%= link_to current_user.coordinator? ? coordinator_project_path(project) : researcher_project_path(project), class: 'custom-btn btn btn-secondary btn-sm shadow-sm' do %>
+    <%= link_to current_user.coordinator? ? coordinator_project_path(id: EncryptionService.encrypt(project.id)) : researcher_project_path(id: EncryptionService.encrypt(project.id)), class: 'custom-btn btn btn-secondary btn-sm shadow-sm' do %>
       <i class="bi bi-arrow-left"></i> Voltar
     <% end %>
 

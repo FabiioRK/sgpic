@@ -9,9 +9,9 @@
         <div class="card-header card-title-custom d-flex justify-content-between align-items-center">
           <span><i class="bi bi-shield-check me-2"></i>Validação do Projeto</span>
           <% if @project.project_status == 'em_analise' && current_user.coordinator? %>
-            <%= link_to 'Fazer uma avaliação', edit_coordinator_project_path(@project), class: 'custom-btn btn btn-sm btn-success' %>
+            <%= link_to 'Fazer uma avaliação', edit_coordinator_project_path(coordinator_id: EncryptionService.encrypt(current_user.coordinator.id), id: EncryptionService.encrypt(@project.id)), class: 'custom-btn btn btn-sm btn-success' %>
           <% elsif @project.project_status == 'pendente' && current_user.researcher? %>
-            <%= link_to 'Solucionar pendência', edit_researcher_project_path(@project), class: 'custom-btn btn btn-sm btn-warning' %>
+            <%= link_to 'Solucionar pendência', edit_researcher_project_path(researcher_id: EncryptionService.encrypt(current_user.researcher.id), id: EncryptionService.encrypt(@project.id)), class: 'custom-btn btn btn-sm btn-warning' %>
           <% end %>
         </div>
         <div class="card-body">
@@ -38,8 +38,8 @@
             <% end %>
           </div>
           <% if @annotation_history&.any? || @project.attachments.attached? %>
-            <%= link_to 'Histórico de anotações e documentos', project_annotation_history_path(@project), class: 'custom-btn btn btn-primary mt-3' %>
-          <% else %>
+            <%= link_to 'Histórico de anotações e documentos', project_annotation_history_path(EncryptionService.encrypt(@project.id)), class: 'custom-btn btn btn-primary mt-3' %>
+        <% else %>
             <div class="alert alert-warning mt-3" role="alert">
               <i class="bi bi-exclamation-triangle me-2"></i>
               Este projeto não possui histórico de anotações ou documentos anexados.

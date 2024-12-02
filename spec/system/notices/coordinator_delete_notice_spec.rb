@@ -13,7 +13,7 @@ RSpec.describe 'Coordinator deleting a notice', type: :system do
 
   context 'when the notice does not belong to a project' do
     it 'allows the coordinator to delete the notice' do
-      visit notice_path(notice)
+      visit notice_path(id: EncryptionService.encrypt(notice.id))
 
       expect(page).to have_link('Excluir')
       click_link 'Excluir'
@@ -25,7 +25,7 @@ RSpec.describe 'Coordinator deleting a notice', type: :system do
 
   context 'when the notice belongs to a project' do
     it 'does not allow the coordinator to delete the notice' do
-      visit notice_path(notice_linked)
+      visit notice_path(id: EncryptionService.encrypt(notice_linked.id))
 
       expect(page).to have_link('Excluir')
       click_link 'Excluir'

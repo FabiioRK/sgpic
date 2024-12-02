@@ -32,7 +32,7 @@
             </small>
           </div>
           <% unless notification.read? %>
-            <%= button_to mark_as_read_notification_path(notification),
+            <%= button_to mark_as_read_notification_path(id: EncryptionService.encrypt(notification.id)),
                           method: :patch,
                           class: "btn btn-sm btn-outline-primary align-self-start",
                           data: {

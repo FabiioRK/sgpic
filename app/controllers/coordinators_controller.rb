@@ -8,7 +8,7 @@ class CoordinatorsController < ApplicationController
 
   def update
     if @coordinator.update(coordinator_params)
-      render json: { success: true, redirect_url: coordinator_path, message: 'Perfil atualizado com sucesso.' }
+      render json: { success: true, redirect_url: coordinator_path(id: EncryptionService.encrypt(@coordinator.id)), message: 'Perfil atualizado com sucesso.' }
       return
     end
 
@@ -42,9 +42,13 @@ class CoordinatorsController < ApplicationController
 
   def set_coordinator
     begin
-      @coordinator = Coordinator.find(params[:id])
+      decrypted_id = EncryptionService.decrypt(params[:id])
+      @coordinator = Coordinator.find(decrypted_id)
     rescue ActiveRecord::RecordNotFound
       @coordinator = nil
+      redirect_to root_path, alert: 'Coordenador não encontrado'
+    rescue ActiveSupport::MessageEncryptor::InvalidMessage
+      redirect_to root_path, alert: 'ID inválido ou corrompido'
     end
   end
 end

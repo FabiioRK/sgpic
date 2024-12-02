@@ -29,9 +29,9 @@ class ApplicationController < ActionController::Base
   def profile_path_for_role(user)
     case user.role
     when 'coordinator'
-      coordinator_path(user.coordinator)
+      coordinator_path(id: EncryptionService.encrypt(user.coordinator.id))
     when 'researcher'
-      researcher_path(user.researcher)
+      researcher_path(id: EncryptionService.encrypt(user.researcher.id))
     else
       root_path
     end

@@ -2,14 +2,16 @@ class AnnotationHistoriesController < ApplicationController
   before_action :authorize_user
   before_action :annotation_accessible_by
   def show
-    @project = Project.find(params[:project_id])
+    decrypted_project_id = EncryptionService.decrypt(params[:project_id])
+    @project = Project.find(decrypted_project_id)
     @annotation_history = AnnotationHistory.where(project: @project).order(created_at: :desc)
   end
 
   private
 
   def annotation_accessible_by
-    @project = Project.find(params[:project_id])
+    decrypted_project_id = EncryptionService.decrypt(params[:project_id])
+    @project = Project.find(decrypted_project_id)
 
     return if current_user && case current_user.role
                               when 'coordinator'

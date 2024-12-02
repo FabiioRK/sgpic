@@ -47,7 +47,7 @@
   </div>
 
   <div class="d-flex justify-content-start mt-4">
-    <%= link_to history_notice_path(@notice), class: 'custom-btn btn btn-secondary btn-sm' do %>
+    <%= link_to history_notice_path(id: EncryptionService.encrypt(@notice.id)), class: 'custom-btn btn btn-secondary btn-sm' do %>
       <i class="bi bi-arrow-left"></i> Voltar
     <% end %>
   </div>

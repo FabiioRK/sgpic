@@ -8,6 +8,14 @@ RSpec.describe 'Supervisor viewing all projects', type: :system do
 
   before do
     login_as user, scope: :user
+
+    allow(EncryptionService).to receive(:encrypt).and_wrap_original do |method, *args|
+      "encrypted-#{args.first}"
+    end
+
+    allow(EncryptionService).to receive(:decrypt).and_wrap_original do |method, *args|
+      args.first.sub('encrypted-', '').to_i
+    end
   end
 
   it 'vê todos os projetos disponíveis' do
@@ -55,7 +63,9 @@ RSpec.describe 'Supervisor viewing all projects', type: :system do
     project = projects.first
     visit supervisor_projects_path
 
-    click_link 'Detalhes', href: supervisor_project_path(project)
+    within("[data-project-id='encrypted-#{project.id}']") do
+      click_link 'Detalhes'
+    end
 
     expect(page).to have_content("Visualização do projeto Nº #{project.ric_number}")
     expect(page).to have_content(project.project_title)

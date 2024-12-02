@@ -40,6 +40,6 @@
       <% end %>
     <% end %>
 
-    <%= link_to 'Editar', edit_researcher_path(@researcher), class: "btn btn-sm btn-warning custom-btn" %>
+    <%= link_to 'Editar', edit_researcher_path(id: EncryptionService.encrypt(@researcher.id)), class: "btn btn-sm btn-warning custom-btn" %>
   </div>
 </div>

@@ -43,7 +43,9 @@ RSpec.describe 'Supervisor visualizando coordenadores', type: :system do
     it 'permite visualizar um coordenador' do
       visit coordinators_path
 
-      click_link 'Visualizar', href: coordinator_path(coordinator1)
+      within("tr[data-coordinator-id='#{coordinator1.id}']") do
+        click_link 'Visualizar'
+      end
 
       expect(page).to have_content(coordinator1.name)
       expect(page).to have_content(coordinator1.user.email)

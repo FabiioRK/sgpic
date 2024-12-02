@@ -6,7 +6,8 @@ class NoticesController < ApplicationController
   end
 
   def show
-    @notice = Notice.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @notice = Notice.find(decrypted_id)
   end
 
   def new
@@ -27,11 +28,13 @@ class NoticesController < ApplicationController
   end
 
   def edit
-    @notice = Notice.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @notice = Notice.find(decrypted_id)
   end
 
   def update
-    @notice = Notice.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @notice = Notice.find(decrypted_id)
 
     if @notice.update(notice_params)
       changes_made = @notice.saved_changes.slice(*notice_params.keys)
@@ -45,7 +48,7 @@ class NoticesController < ApplicationController
         )
       end
 
-      render json: { success: true, redirect_url: notice_path(@notice), message: 'Edital atualizado com sucesso.' }
+      render json: { success: true, redirect_url: notice_path(id: EncryptionService.encrypt(@notice.id)), message: 'Edital atualizado com sucesso.' }
       return
     end
 
@@ -54,7 +57,8 @@ class NoticesController < ApplicationController
   end
 
   def destroy
-    @notice = Notice.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @notice = Notice.find(decrypted_id)
 
     if @notice.destroy
       render json: { success: true, redirect_url: notices_path, message: "Edital excluído com sucesso." }
@@ -70,7 +74,8 @@ class NoticesController < ApplicationController
   end
 
   def toggle_active
-    @notice = Notice.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @notice = Notice.find(decrypted_id)
 
     if @notice.update(active: !@notice.active)
       render json: { success: true, message: 'Status do edital atualizado com sucesso.' }
@@ -82,7 +87,8 @@ class NoticesController < ApplicationController
 
 
   def history
-    @notice = Notice.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @notice = Notice.find(decrypted_id)
     @histories = @notice.notice_histories.order(edited_at: :desc).page(params[:page]).per(5)
   end
 

@@ -36,6 +36,6 @@
         <i class="bi bi-arrow-left"></i> Voltar
       <% end %>
     <% end %>
-    <%= link_to 'Editar', edit_coordinator_path(@coordinator), class: "btn btn-sm btn-warning custom-btn" %>
+    <%= link_to 'Editar', edit_coordinator_path(id: EncryptionService.encrypt(@coordinator.id)), class: "btn btn-sm btn-warning custom-btn" %>
   </div>
 </div>

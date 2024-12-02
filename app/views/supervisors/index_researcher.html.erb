@@ -12,7 +12,7 @@
     </thead>
     <tbody>
     <% @researchers.each do |researcher| %>
-      <tr>
+      <tr data-researcher-id="<%= researcher.id %>">
         <td data-label="Nome"><%= researcher.name %></td>
         <td data-label="E-mail"><%= researcher.user.email %></td>
         <td data-label="Status">
@@ -24,11 +24,11 @@
         </td>
         <td data-label="Ações" class="text-center">
           <div class="action-buttons d-flex justify-content-center gap-2">
-            <%= link_to researcher_path(researcher), class: "btn btn-info btn-sm custom-btn" do %>
+            <%= link_to researcher_path(id: EncryptionService.encrypt(researcher.id)), class: "btn btn-info btn-sm custom-btn" do %>
               <i class="bi bi-eye"></i> Visualizar
             <% end %>
 
-            <%= link_to researcher.user.active? ? deactivate_researcher_path(researcher) : activate_researcher_path(researcher),
+            <%= link_to researcher.user.active? ? deactivate_researcher_path(id: EncryptionService.encrypt(researcher.id)) : activate_researcher_path(id: EncryptionService.encrypt(researcher.id)),
                         method: :patch,
                         class: researcher.user.active? ? 'btn btn-danger btn-sm custom-btn confirm-post' : 'btn btn-success btn-sm custom-btn confirm-post',
                         data: { sweet_confirm: "Tem certeza que deseja #{researcher.user.active? ? 'desativar' : 'ativar'} este coordenador?" } do %>

@@ -60,7 +60,16 @@
       </div>
 
       <div class="text-start">
-        <%= link_to current_user.coordinator? ? coordinator_project_path(@project) : researcher_project_path(@project), class: 'custom-btn btn btn-secondary btn-sm shadow-sm' do %>
+        <%= link_to(
+              if current_user.supervisor?
+                supervisor_project_path(id: EncryptionService.encrypt(@project.id))
+              elsif current_user.coordinator?
+                coordinator_project_path(coordinator_id: EncryptionService.encrypt(current_user.coordinator.id), id: EncryptionService.encrypt(@project.id))
+              else
+                researcher_project_path(researcher_id: EncryptionService.encrypt(current_user.researcher.id), id: EncryptionService.encrypt(@project.id))
+              end,
+              class: 'custom-btn btn btn-secondary btn-sm shadow-sm'
+            ) do %>
           <i class="bi bi-arrow-left"></i> Voltar
         <% end %>
       </div>

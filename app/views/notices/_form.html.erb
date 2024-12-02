@@ -9,7 +9,7 @@
   </div>
 <% end %>
 
-<%= form_with model: notice, local: true, class: "notice-form mt-4 confirm-save", data: { turbo: false } do |f| %>
+<%= form_with(model: notice, url: notice.persisted? ? notice_path(id: EncryptionService.encrypt(notice.id)) : notices_path, local: true, class: "notice-form mt-4 confirm-save", data: { turbo: false }) do |f| %>
   <div class="row">
     <div class="col-md-6 mb-3">
       <%= f.label :name, required_label(:name, 'notice'), class: "form-label fw-bold" %>

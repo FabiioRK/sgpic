@@ -10,6 +10,14 @@ RSpec.describe 'Researcher viewing projects', type: :system do
 
   before do
     login_as user, scope: :user
+
+    allow(EncryptionService).to receive(:encrypt).and_wrap_original do |method, *args|
+      "encrypted-#{args.first}"
+    end
+
+    allow(EncryptionService).to receive(:decrypt).and_wrap_original do |method, *args|
+      args.first.sub('encrypted-', '').to_i
+    end
   end
 
   it 've seus próprios projetos' do
@@ -33,10 +41,13 @@ RSpec.describe 'Researcher viewing projects', type: :system do
   it 'vê detalhes de um projeto' do
     project = own_projects.first
     visit researcher_projects_path(researcher)
-    click_link 'Detalhes', href: researcher_project_path(researcher, project)
 
-    expect(page).to have_content("Visualização do projeto Nº #{project.ric_number}")
+    within("[data-project-id='encrypted-#{project.id}']") do
+      click_link 'Detalhes'
+    end
+
     expect(page).to have_content(project.project_title)
+    expect(page).to have_content("Visualização do projeto Nº #{project.ric_number}")
     expect(page).to have_content(project.project_summary)
     expect(page).to have_content(project.student.name)
   end

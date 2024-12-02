@@ -18,7 +18,8 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @project = Project.find(decrypted_id)
     @annotation_history = AnnotationHistory.where(project: @project).order(created_at: :desc)
   end
 
@@ -54,16 +55,18 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @project = Project.find(decrypted_id)
     @coordinator = current_user.coordinator
     @researcher = current_user.researcher
-    @project = Project.find(params[:id])
     @annotation_history = AnnotationHistory.where(project: @project).order(created_at: :desc)
   end
 
   def update
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @project = Project.find(decrypted_id)
     @coordinator = current_user.coordinator
     @researcher = current_user.researcher
-    @project = Project.find(params[:id])
 
     case
     when params[:interrupt_button]
@@ -106,16 +109,23 @@ class ProjectsController < ApplicationController
       end
 
       if current_user.coordinator?
-        render json: { success: true, redirect_url: coordinator_project_path(@project), message: 'Projeto atualizado com sucesso.' }
+        render json: {
+          success: true,
+          redirect_url: coordinator_project_path(id: EncryptionService.encrypt(@project.id)),
+          message: 'Projeto atualizado com sucesso.' }
         return
       elsif current_user.researcher?
-        render json: { success: true, redirect_url: researcher_project_path(@project), message: 'Projeto atualizado com sucesso.' }
+        render json: {
+          success: true,
+          redirect_url: researcher_project_path(id: EncryptionService.encrypt(@project.id)),
+          message: 'Projeto atualizado com sucesso.' }
         return
       end
     end
 
     @annotation_history = AnnotationHistory.where(project: @project).order(created_at: :desc)
     flash.now.alert = 'Não foi possível atualizar o projeto.'
+    redirect_to root_path, alert: 'Acesso não autorizado'
     render partial: 'form_edit', locals: { project: @project, researcher: @researcher, annotation_history: @annotation_history }, status: :unprocessable_entity
   end
 
@@ -197,7 +207,8 @@ class ProjectsController < ApplicationController
   end
 
   def authorize_coordinator_researcher_update
-    @project = Project.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @project = Project.find(decrypted_id)
 
     unless current_user&.coordinator? && current_user&.active? || current_user&.researcher? && current_user&.active? && @project.project_status == 'pendente'
       redirect_to root_path, alert: 'Acesso não autorizado'
@@ -205,7 +216,8 @@ class ProjectsController < ApplicationController
   end
 
   def project_accessible_by
-    @project = Project.find(params[:id])
+    decrypted_id = EncryptionService.decrypt(params[:id])
+    @project = Project.find(decrypted_id)
 
     return if current_user && case current_user.role
                               when 'coordinator'

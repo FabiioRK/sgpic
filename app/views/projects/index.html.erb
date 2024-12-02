@@ -23,9 +23,9 @@
                   when 'supervisor'
                     supervisor_projects_path(status: (status_key unless status_key == 'todos'))
                   when 'coordinator'
-                    coordinator_projects_path(user.coordinator.id, status: (status_key unless status_key == 'todos'))
+                    coordinator_projects_path(coordinator_id: EncryptionService.encrypt(user.coordinator.id), status: (status_key unless status_key == 'todos'))
                   when 'researcher'
-                    researcher_projects_path(user.researcher.id, status: (status_key unless status_key == 'todos'))
+                    researcher_projects_path(researcher_id: EncryptionService.encrypt(user.researcher.id), status: (status_key unless status_key == 'todos'))
                   else
                     '#'
                   end %>
@@ -39,7 +39,7 @@
     <div class="row g-4">
       <% @projects.each do |project| %>
         <div class="col-md-4">
-          <div class="card shadow-sm project-card h-100">
+          <div class="card shadow-sm project-card h-100" data-project-id="<%= EncryptionService.encrypt(project.id) %>">
             <div class="card-body">
               <h5 class="card-title text-primary">
                 <i class="bi bi-bookmark-check me-2"></i>
@@ -71,9 +71,15 @@
             </div>
             <div class="card-footer bg-light text-end">
               <% path = case current_user.role
-                        when 'supervisor' then supervisor_project_path(project)
-                        when 'coordinator' then coordinator_project_path(project.coordinator, project)
-                        when 'researcher' then researcher_project_path(project.researcher, project)
+                        when 'supervisor' then supervisor_project_path(id: EncryptionService.encrypt(project.id))
+                        when 'coordinator' then coordinator_project_path(
+                          coordinator_id: EncryptionService.encrypt(current_user.coordinator.id),
+                          id: EncryptionService.encrypt(project.id)
+                        )
+                        when 'researcher' then researcher_project_path(
+                          researcher_id: EncryptionService.encrypt(current_user.researcher.id),
+                          id: EncryptionService.encrypt(project.id)
+                        )
                         end %>
               <%= link_to "Detalhes", path, class: 'btn btn-primary btn-sm custom-btn' %>
             </div>

@@ -10,6 +10,14 @@ RSpec.describe 'Coordinator viewing projects', type: :system do
 
   before do
     login_as user, scope: :user
+
+    allow(EncryptionService).to receive(:encrypt).and_wrap_original do |method, *args|
+      "encrypted-#{args.first}"
+    end
+
+    allow(EncryptionService).to receive(:decrypt).and_wrap_original do |method, *args|
+      args.first.sub('encrypted-', '').to_i
+    end
   end
 
   it 'vê seus próprios projetos' do
@@ -33,7 +41,10 @@ RSpec.describe 'Coordinator viewing projects', type: :system do
   it 'vê detalhes de um projeto' do
     project = own_projects.first
     visit coordinator_projects_path(coordinator)
-    click_link 'Detalhes', href: coordinator_project_path(coordinator, project)
+
+    within("[data-project-id='encrypted-#{project.id}']") do
+      click_link 'Detalhes'
+    end
 
     expect(page).to have_content("Visualização do projeto Nº #{project.ric_number}")
     expect(page).to have_content(project.project_title)
