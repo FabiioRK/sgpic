@@ -74,9 +74,10 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-135-198-225.us-east-2.compute.amazonaws.com << 'EOF'
             cd /home/ubuntu/sgpic
+            git reset --hard HEAD
             git pull origin main
             RAILS_ENV=production bundle install --deployment --without development test
             RAILS_ENV=production bin/rails db:migrate
             RAILS_ENV=production bin/rails assets:precompile
-            sudo systemctl restart rails-app
+            sudo systemctl restart sgpic-app
           EOF
