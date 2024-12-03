@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -53,3 +53,30 @@ jobs:
 
       - name: Run tests
         run: bundle exec rspec --format documentation
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ec2-3-135-198-225.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-135-198-225.us-east-2.compute.amazonaws.com << 'EOF'
+            cd /ubuntu/home/sgpic
+            git pull origin main
+            RAILS_ENV=production bundle install --deployment --without development test
+            RAILS_ENV=production bin/rails db:migrate
+            RAILS_ENV=production bin/rails assets:precompile
+            sudo systemctl restart rails-app
+          EOF
